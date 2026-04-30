@@ -83,10 +83,32 @@
 
                                 <div class="rounded-2xl border border-gray-200 p-6 shadow-sm">
                                     <h4 class="text-lg font-semibold text-gray-900">Metode Pembayaran</h4>
-                                    <div class="mt-4 space-y-3">
+                                    <div class="mt-4 grid grid-cols-2 gap-3">
                                         @foreach($paymentMethods as $method => $label)
-                                            <label class="flex items-center gap-3 rounded-2xl border p-4 hover:border-green-500 cursor-pointer">
-                                                <input type="radio" name="payment_method" value="{{ $method }}" class="h-4 w-4 text-green-600" {{ old('payment_method', $order->payment_method) === $method ? 'checked' : '' }} required>
+                                            <label class="flex items-center gap-3 rounded-2xl border p-4 hover:border-green-500 cursor-pointer {{ old('payment_method', $order->payment_method) === $method ? 'border-green-500 bg-green-50' : '' }}">
+                                                <input type="radio" name="payment_method" value="{{ $method }}" class="sr-only" {{ old('payment_method', $order->payment_method) === $method ? 'checked' : '' }} required>
+                                                <div class="flex h-10 w-10 items-center justify-center rounded-lg bg-white shadow-sm">
+                                                    @switch($method)
+                                                        @case('dana')
+                                                            <span class="text-lg font-bold text-blue-600">D</span>
+                                                            @break
+                                                        @case('qris')
+                                                            <svg class="h-6 w-6 text-purple-600" fill="currentColor" viewBox="0 0 24 24"><path d="M3 3h6v6H3V3zm12 0h6v6h-6V3zM3 15h6v6H3v-6zm12 0h6v6h-6v-6zM9 9h6v6H9V9z"/></svg>
+                                                            @break
+                                                        @case('gopay')
+                                                            <span class="text-lg font-bold text-green-600">Go</span>
+                                                            @break
+                                                        @case('ovo')
+                                                            <span class="text-lg font-bold text-purple-600">OV</span>
+                                                            @break
+                                                        @case('shopee_pay')
+                                                            <span class="text-lg font-bold text-orange-500">S</span>
+                                                            @break
+                                                        @case('bank_transfer')
+                                                            <svg class="h-6 w-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"/></svg>
+                                                            @break
+                                                    @endswitch
+                                                </div>
                                                 <span class="text-sm font-medium text-gray-800">{{ $label }}</span>
                                             </label>
                                         @endforeach

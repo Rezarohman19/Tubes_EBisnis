@@ -128,9 +128,12 @@ class ProductController extends Controller
         }
 
         $paymentMethods = [
-            'bank_transfer' => 'Transfer Bank (Virtual Account)',
             'dana' => 'DANA',
             'qris' => 'QRIS',
+            'gopay' => 'GoPay',
+            'ovo' => 'OVO',
+            'shopee_pay' => 'ShopeePay',
+            'bank_transfer' => 'Transfer Bank (Virtual Account)',
         ];
 
         return view('checkout', [
@@ -144,7 +147,7 @@ class ProductController extends Controller
     {
         $request->validate([
             'shipping_address' => 'required|string|max:255',
-            'payment_method' => 'required|in:bank_transfer,dana,qris',
+            'payment_method' => 'required|in:dana,qris,gopay,ovo,shopee_pay,bank_transfer',
         ]);
 
         $cartData = $this->buildCartItems();
@@ -247,9 +250,12 @@ class ProductController extends Controller
         $order->load('items.product');
 
         $paymentMethods = [
-            'bank_transfer' => 'Transfer Bank (Virtual Account)',
             'dana' => 'DANA',
             'qris' => 'QRIS',
+            'gopay' => 'GoPay',
+            'ovo' => 'OVO',
+            'shopee_pay' => 'ShopeePay',
+            'bank_transfer' => 'Transfer Bank (Virtual Account)',
         ];
 
         return view('payment.index', compact('order', 'paymentMethods'));
@@ -264,7 +270,7 @@ class ProductController extends Controller
 
         // Validate
         $request->validate([
-            'payment_method' => 'required|in:bank_transfer,dana,qris',
+            'payment_method' => 'required|in:dana,qris,gopay,ovo,shopee_pay,bank_transfer',
         ]);
 
         // Check if already paid
