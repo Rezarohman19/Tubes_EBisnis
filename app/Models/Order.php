@@ -10,12 +10,16 @@ class Order extends Model
     use HasFactory;
 
     protected $fillable = [
-        'user_id',
-        'total',
-        'shipping_address',
-        'payment_method',
-        'payment_status',
-        'status',
+        'user_id', 'total', 'shipping_address', 'payment_method',
+        'payment_status', 'status', 'midtrans_order_id',
+        'midtrans_transaction_id', 'midtrans_snap_token',
+        'snap_redirect_url', 'midtrans_status', 'paid_at',
+        'courier', 'tracking_number', 'shipping_cost',
+        'discount', 'coupon_code', 'cancel_reason',
+    ];
+
+    protected $casts = [
+        'paid_at' => 'datetime',
     ];
 
     public function user()
@@ -32,14 +36,42 @@ class Order extends Model
     {
         return match ($this->payment_method) {
             'bank_transfer' => 'Transfer Bank (Virtual Account)',
-            'dana' => 'DANA',
-            'qris' => 'QRIS',
-            default => ucfirst(str_replace('_', ' ', $this->payment_method)),
+            'dana'          => 'DANA',
+            'qris'          => 'QRIS',
+            'gopay'         => 'GoPay',
+            'ovo'           => 'OVO',
+            'shopee_pay'    => 'ShopeePay',
+            'midtrans'      => 'Midtrans',
+            default         => ucfirst(str_replace('_', ' ', $this->payment_method)),
         };
     }
 
     public function getPaymentStatusLabelAttribute(): string
     {
-        return $this->payment_status === 'paid' ? 'Lunas' : 'Menunggu Pembayaran';
+        return match ($this->payment_status) {
+            'paid'    => 'Lunas',
+            'pending' => 'Menunggu Pembayaran',
+            'expired' => 'Kedaluwarsa',
+            'failed'  => 'Gagal',
+            'cancel'  => 'Dibatalkan',
+            default   => 'Menunggu Pembayaran',
+        };
+    }
+
+    public function getStatusColorAttribute(): string
+    {
+        return match ($this->status) {
+            'Menunggu Pembayaran' => 'yellow',
+            'Diproses'            => 'blue',
+            'Dikirim'             => 'indigo',
+            'Selesai'             => 'green',
+            'Dibatalkan'          => 'red',
+            default               => 'gray',
+        };
+    }
+
+    public function getGrandTotalAttribute(): int
+    {
+        return $this->total + $this->shipping_cost - $this->discount;
     }
 }
