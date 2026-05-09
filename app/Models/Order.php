@@ -70,8 +70,20 @@ class Order extends Model
         };
     }
 
+    /**
+     * PERBAIKAN #5: grand_total tidak boleh double-kurangi diskon.
+     *
+     * Alur pembuatan order di ProductController@placeOrder:
+     *   $grandTotal = subtotal - discount  → disimpan ke kolom `total`
+     *
+     * Jadi `total` sudah berisi harga bersih setelah diskon.
+     * grand_total = total + shipping_cost (saja)
+     *
+     * Versi lama: return $this->total + $this->shipping_cost - $this->discount;
+     * Ini salah karena diskon sudah dikurangkan dari total saat order dibuat.
+     */
     public function getGrandTotalAttribute(): int
     {
-        return $this->total + $this->shipping_cost - $this->discount;
+        return $this->total + ($this->shipping_cost ?? 0);
     }
 }

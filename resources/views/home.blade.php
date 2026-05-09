@@ -83,7 +83,8 @@
     </div>
 </section>
 
-{{-- ─── FILTER & SEARCH ────────────────────────────────────────────────────── --}}
+{{-- ─── FILTER & SEARCH ─────────────────────────────────────────────────────── --}}
+{{-- PERBAIKAN #2: Verifikasi name attribute di semua input/select sudah cocok dengan controller --}}
 <section id="products" class="mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8">
     {{-- Alert --}}
     @if(session('success'))
@@ -105,6 +106,7 @@
             <h2 class="text-2xl font-extrabold text-gray-900">Katalog Produk</h2>
             <p class="mt-1 text-sm text-gray-500">{{ $products->count() }} produk tersedia</p>
         </div>
+        {{-- PERBAIKAN #2: name="search", name="stock_filter", name="sort" harus cocok dengan controller --}}
         <form method="GET" action="{{ route('home') }}" class="flex flex-wrap gap-2">
             <input
                 type="text"
@@ -113,11 +115,13 @@
                 placeholder="Cari produk..."
                 class="rounded-xl border-gray-300 px-4 py-2 text-sm shadow-sm focus:border-blue-500 focus:ring-blue-500"
             >
+            {{-- stock_filter: controller cek 'available' dan 'out' --}}
             <select name="stock_filter" class="rounded-xl border-gray-300 px-3 py-2 text-sm shadow-sm focus:border-blue-500 focus:ring-blue-500">
                 <option value="">Semua Stok</option>
                 <option value="available" {{ request('stock_filter') === 'available' ? 'selected' : '' }}>Tersedia</option>
                 <option value="out"       {{ request('stock_filter') === 'out'       ? 'selected' : '' }}>Habis</option>
             </select>
+            {{-- sort: controller cek 'newest', 'price_asc', 'price_desc' --}}
             <select name="sort" class="rounded-xl border-gray-300 px-3 py-2 text-sm shadow-sm focus:border-blue-500 focus:ring-blue-500">
                 <option value="newest"     {{ request('sort') === 'newest'     ? 'selected' : '' }}>Terbaru</option>
                 <option value="price_asc"  {{ request('sort') === 'price_asc'  ? 'selected' : '' }}>Harga: Murah → Mahal</option>
@@ -146,6 +150,7 @@
                     {{-- Image --}}
                     <div class="relative aspect-square overflow-hidden bg-gradient-to-br from-gray-50 to-gray-100">
                         @if($product->image)
+                            {{-- PERBAIKAN #3: Pakai image_url accessor dari model agar storage:link bekerja --}}
                             <img src="{{ $product->image_url }}" alt="{{ $product->name }}" class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105">
                         @else
                             <div class="flex h-full flex-col items-center justify-center gap-2">
@@ -185,21 +190,33 @@
                             </div>
                         </div>
 
-                        {{-- Action --}}
+                        {{-- PERBAIKAN #1: Cek autentikasi sebelum tombol Beli --}}
                         <div class="mt-4">
                             @if($product->stock > 0)
-                                <form action="{{ route('cart.add') }}" method="POST" class="flex gap-2">
-                                    @csrf
-                                    <input type="hidden" name="product_id" value="{{ $product->id }}">
-                                    <input type="number" name="quantity" value="1" min="1" max="{{ $product->stock }}"
-                                        class="w-16 rounded-xl border border-gray-200 px-2 py-2.5 text-center text-sm font-bold text-gray-700 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-200">
-                                    <button type="submit" class="flex flex-1 items-center justify-center gap-1.5 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 py-2.5 text-sm font-bold text-white transition-all hover:shadow-lg hover:shadow-blue-500/30">
+                                @auth
+                                    {{-- User sudah login: tampilkan form tambah ke keranjang --}}
+                                    <form action="{{ route('cart.add') }}" method="POST" class="flex gap-2">
+                                        @csrf
+                                        <input type="hidden" name="product_id" value="{{ $product->id }}">
+                                        <input type="number" name="quantity" value="1" min="1" max="{{ $product->stock }}"
+                                            class="w-16 rounded-xl border border-gray-200 px-2 py-2.5 text-center text-sm font-bold text-gray-700 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-200">
+                                        <button type="submit" class="flex flex-1 items-center justify-center gap-1.5 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 py-2.5 text-sm font-bold text-white transition-all hover:shadow-lg hover:shadow-blue-500/30">
+                                            <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"/>
+                                            </svg>
+                                            Beli
+                                        </button>
+                                    </form>
+                                @else
+                                    {{-- User belum login: arahkan ke halaman login --}}
+                                    <a href="{{ route('login') }}"
+                                       class="flex w-full items-center justify-center gap-1.5 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 py-2.5 text-sm font-bold text-white transition-all hover:shadow-lg hover:shadow-blue-500/30">
                                         <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"/>
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1"/>
                                         </svg>
-                                        Beli
-                                    </button>
-                                </form>
+                                        Login untuk Beli
+                                    </a>
+                                @endauth
                             @else
                                 <button disabled class="flex w-full items-center justify-center gap-2 rounded-xl bg-gray-100 py-2.5 text-sm font-bold text-gray-400 cursor-not-allowed">
                                     Stok Habis
