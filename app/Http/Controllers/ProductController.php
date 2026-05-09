@@ -12,8 +12,8 @@ use Illuminate\Support\Facades\DB;
 
 class ProductController extends Controller
 {
-    // ─── PUBLIC HOME (tanpa login) ───────────────────────────────────────────
-    public function publicHome(Request $request)
+    // ─── DASHBOARD (landing page) ──────────────────────────────────────────────
+    public function index(Request $request)
     {
         $query = Product::orderBy('created_at', 'desc');
 
@@ -40,13 +40,6 @@ class ProductController extends Controller
 
         $products = $query->get();
 
-        return view('home', compact('products'));
-    }
-
-    // ─── DASHBOARD (logged in) ───────────────────────────────────────────────
-    public function index()
-    {
-        $products = Product::orderBy('name')->get();
         return view('dashboard', compact('products'));
     }
 
@@ -190,7 +183,9 @@ class ProductController extends Controller
         $discount    = session('coupon_discount', 0);
         $couponError = null;
 
-        $grandTotal = max(0, $cartData['subtotal'] - $discount);
+        $netTotal    = max(0, $cartData['subtotal'] - $discount);
+        $shippingFee = $netTotal >= 150000 ? 0 : 15000;
+        $grandTotal  = $netTotal + $shippingFee;
 
         $paymentMethods = [
             'dana'          => 'DANA',
@@ -205,6 +200,7 @@ class ProductController extends Controller
             'items'          => $cartData['items'],
             'subtotal'       => $cartData['subtotal'],
             'discount'       => $discount,
+            'shipping_cost'  => $shippingFee,
             'grandTotal'     => $grandTotal,
             'couponCode'     => $couponCode,
             'couponError'    => $couponError,
@@ -252,12 +248,14 @@ class ProductController extends Controller
             return redirect()->route('dashboard')->with('error', 'Keranjang kosong.');
         }
 
-        // Hitung diskon dari session
-        $discount   = session('coupon_discount', 0);
-        $couponCode = session('coupon_code');
-        $grandTotal = max(0, $cartData['subtotal'] - $discount);
+        // Hitung diskon & ongkir
+        $discount    = session('coupon_discount', 0);
+        $couponCode  = session('coupon_code');
+        $netTotal    = max(0, $cartData['subtotal'] - $discount);
+        $shippingFee = $netTotal >= 150000 ? 0 : 15000;
+        $grandTotal  = $netTotal + $shippingFee;
 
-        $order = DB::transaction(function () use ($request, $cartData, $discount, $couponCode, $grandTotal) {
+        $order = DB::transaction(function () use ($request, $cartData, $discount, $couponCode, $shippingFee, $grandTotal) {
             $order = Order::create([
                 'user_id'          => Auth::id(),
                 'total'            => $grandTotal,
@@ -266,6 +264,7 @@ class ProductController extends Controller
                 'payment_status'   => 'pending',
                 'status'           => 'Menunggu Pembayaran',
                 'discount'         => $discount,
+                'shipping_cost'    => $shippingFee,
                 'coupon_code'      => $couponCode,
             ]);
 

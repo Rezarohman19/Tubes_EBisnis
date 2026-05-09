@@ -1,358 +1,270 @@
-﻿<x-app-layout>
-    <x-slot name="header">
-        <nav class="flex items-center justify-between">
-            <div class="flex items-center gap-3">
-                <div class="flex h-11 w-11 items-center justify-center rounded-2xl bg-gradient-to-br from-blue-600 to-indigo-600 shadow-lg shadow-blue-500/30">
-                    <svg class="h-6 w-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/>
-                    </svg>
-                </div>
+@extends('layouts.dashboard')
+
+@section('content')
+<div class="animate-fade-in-up">
+    {{-- ── HERO SECTION ─────────────────────────────────────── --}}
+    <section class="relative overflow-hidden bg-gradient-to-br from-[#0B0F1A] via-[#161B29] to-[#0B0F1A]">
+        {{-- Background Decorations --}}
+        <div class="absolute inset-0">
+            <div class="absolute -left-32 -top-32 h-96 w-96 rounded-full bg-blue-600/20 blur-3xl animate-blob"></div>
+            <div class="absolute -right-32 -bottom-32 h-96 w-96 rounded-full bg-violet-600/20 blur-3xl animate-blob animation-delay-2000"></div>
+            <div class="absolute left-1/2 top-1/2 h-64 w-64 -translate-x-1/2 -translate-y-1/2 rounded-full bg-indigo-500/10 blur-3xl animate-blob animation-delay-4000"></div>
+            <div class="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAiIGhlaWdodD0iMjAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGNpcmNsZSBjeD0iMSIgY3k9IjEiIHI9IjEiIGZpbGw9InJnYmEoMjU1LDI1NSwyNTUsMC4wMykiLz48L3N2Zz4=')] opacity-60"></div>
+        </div>
+
+        <div class="relative mx-auto max-w-7xl px-4 py-16 sm:px-6 md:py-24 lg:px-8">
+            <div class="grid items-center gap-12 lg:grid-cols-2">
+                {{-- Left Content --}}
                 <div>
-                    <h1 class="text-xl font-extrabold text-gray-900 tracking-tight">Frozy<span class="text-blue-600">mart</span></h1>
-                    <p class="text-[10px] font-medium uppercase tracking-widest text-gray-400">Premium Frozen Food</p>
-                </div>
-            </div>
-            <div class="hidden items-center gap-1 md:flex">
-                <a href="{{ route('dashboard') }}" class="group relative rounded-xl px-4 py-2.5 text-sm font-bold text-gray-700 transition-all hover:bg-blue-50">
-                    <span class="relative flex items-center gap-2">
-                        <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/>
-                        </svg>
-                        Dashboard
-                    </span>
-                    <span class="absolute bottom-0 left-1/2 h-0.5 w-0 -translate-x-1/2 bg-blue-600 transition-all group-hover:w-full"></span>
-                </a>
-                <a href="{{ route('products.index') }}" class="group relative rounded-xl px-4 py-2.5 text-sm font-bold text-gray-700 transition-all hover:bg-blue-50">
-                    <span class="relative flex items-center gap-2">
-                        <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"/>
-                        </svg>
-                        Katalog
-                    </span>
-                    <span class="absolute bottom-0 left-1/2 h-0.5 w-0 -translate-x-1/2 bg-blue-600 transition-all group-hover:w-full"></span>
-                </a>
-                <a href="{{ route('cart.index') }}" class="group relative rounded-xl px-4 py-2.5 text-sm font-bold text-gray-700 transition-all hover:bg-blue-50">
-                    <span class="relative flex items-center gap-2">
-                        <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"/>
-                        </svg>
-                        Keranjang
-                    </span>
-                    <span class="absolute bottom-0 left-1/2 h-0.5 w-0 -translate-x-1/2 bg-blue-600 transition-all group-hover:w-full"></span>
-                </a>
-                <a href="{{ route('orders.index') }}" class="group relative rounded-xl px-4 py-2.5 text-sm font-bold text-gray-700 transition-all hover:bg-blue-50">
-                    <span class="relative flex items-center gap-2">
-                        <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/>
-                        </svg>
-                        Pesanan
-                    </span>
-                    <span class="absolute bottom-0 left-1/2 h-0.5 w-0 -translate-x-1/2 bg-blue-600 transition-all group-hover:w-full"></span>
-                </a>
-                <a href="{{ route('payment.history') }}" class="group relative rounded-xl px-4 py-2.5 text-sm font-bold text-gray-700 transition-all hover:bg-blue-50">
-                    <span class="relative flex items-center gap-2">
-                        <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"/>
-                        </svg>
-                        Pembayaran
-                    </span>
-                    <span class="absolute bottom-0 left-1/2 h-0.5 w-0 -translate-x-1/2 bg-blue-600 transition-all group-hover:w-full"></span>
-                </a>
-            </div>
-            <button class="flex h-10 w-10 items-center justify-center rounded-xl border border-gray-200 bg-white text-gray-600 md:hidden">
-                <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
-                </svg>
-            </button>
-        </nav>
-    </x-slot>
-
-    <div class="py-6">
-        <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-            {{-- Alert Messages --}}
-            @if(session('success'))
-                <div class="mb-6 flex animate-slide-down items-center gap-3 rounded-2xl border border-green-200/80 bg-gradient-to-r from-green-50 to-emerald-50 p-4 shadow-lg shadow-green-500/10">
-                    <div class="flex h-10 w-10 items-center justify-center rounded-full bg-green-100">
-                        <svg class="h-5 w-5 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
-                        </svg>
+                    <div class="mb-6 inline-flex items-center gap-2.5 rounded-full border border-blue-400/20 bg-blue-500/10 px-5 py-2 backdrop-blur-sm">
+                        <span class="relative flex h-2 w-2">
+                            <span class="absolute inline-flex h-full w-full animate-ping rounded-full bg-blue-400 opacity-75"></span>
+                            <span class="relative inline-flex h-2 w-2 rounded-full bg-blue-400"></span>
+                        </span>
+                        <span class="text-xs font-bold uppercase tracking-wider text-blue-300">🚚 Gratis Ongkir Min. Rp 150rb</span>
                     </div>
-                    <p class="flex-1 text-sm font-semibold text-green-800">{{ session('success') }}</p>
-                </div>
-            @endif
 
-            {{-- Hero Section --}}
-            <div class="relative mb-8 overflow-hidden rounded-[2rem] bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 p-8 md:p-12">
-                <div class="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxwYXRoIGQ9Ik0zNiAxOGMtOS45NCAwLTE4IDguMDYtMTggMzhzOC4wNiAzOCAxOCAzOCAxOC04LjA2IDE4LTM4LTguMDYtMzgtMTgtMzh6bTAgMGMtMTEuMTIgMC0yMCA4Ljg4LTIwIDIwcTguODggMjAgMjAgMjAgMjAtOC44OCAyMC0yMC04Ljg4LTIwLTIwLTIwem0zNiAwYzExLjEyIDAgMjAtOC44OCAyMC0yMC04Ljg4LTIwLTIwLTIwLTIwIDguODgtMjAgMjAtOC44OCAyMC0yMCAyMHoiIGZpbGw9IiNmZmYiIGZpbGwtb3BhY2l0eT0iMC4wNSIvPjwvZz48L3N2Zz4=')] opacity-50"></div>
-                <div class="absolute -right-20 -top-20 h-64 w-64 rounded-full bg-blue-500/20 blur-3xl"></div>
-                <div class="absolute -bottom-20 -right-20 h-64 w-64 rounded-full bg-indigo-500/20 blur-3xl"></div>
-                
-                <div class="relative z-10 flex flex-col gap-8 lg:flex-row lg:items-center lg:justify-between">
-                    <div class="max-w-xl">
-                        <div class="mb-4 inline-flex items-center gap-2 rounded-full border border-blue-500/30 bg-blue-500/10 px-4 py-1.5">
-                            <span class="h-2 w-2 animate-pulse rounded-full bg-blue-500"></span>
-                            <span class="text-xs font-bold uppercase tracking-wider text-blue-400">Free Shopping Min. Rp 150rb</span>
-                        </div>
-                        <h2 class="text-4xl font-extrabold leading-tight text-white md:text-5xl">
-                            Belanja <span class="bg-gradient-to-r from-blue-400 to-indigo-400 bg-clip-text text-transparent">Frozen Food</span><br>
-                            Lebih Mudah!
-                        </h2>
-                        <p class="mt-4 text-base text-slate-400">Koleksi lengkap makanan beku berkualitas tinggi dengan harga terbaik. Dikirim segar ke pintu rumah Anda.</p>
-                        <div class="mt-8 flex flex-wrap gap-4">
-                            <a href="#products" class="group inline-flex items-center gap-2 rounded-2xl bg-gradient-to-r from-blue-600 to-indigo-600 px-6 py-3.5 text-sm font-bold text-white shadow-xl shadow-blue-500/30 transition-all hover:scale-105 hover:shadow-2xl hover:shadow-blue-500/40">
-                                Mulai Belanja
-                                <svg class="h-4 w-4 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
-                                </svg>
+                    <h1 class="text-4xl font-black leading-[1.1] text-white md:text-5xl lg:text-6xl">
+                        Frozen Food<br>
+                        <span class="bg-gradient-to-r from-blue-400 via-indigo-400 to-violet-400 bg-clip-text text-transparent">Berkualitas</span> Tinggi
+                    </h1>
+
+                    <p class="mt-6 max-w-lg text-base leading-relaxed text-slate-400 md:text-lg">
+                        Dikirim segar langsung ke pintu rumahmu. Pilihan lengkap dengan harga terbaik dan jaminan kualitas.
+                    </p>
+
+                    <div class="mt-10 flex flex-wrap gap-4">
+                        <a href="#products" class="btn-primary !px-8 !py-4 !text-sm">
+                            Mulai Belanja
+                            <svg class="h-4 w-4 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
+                        </a>
+                        @guest
+                            <a href="{{ route('register') }}" class="inline-flex items-center gap-2 rounded-2xl border border-white/10 bg-white/5 px-8 py-4 text-sm font-bold text-white backdrop-blur-sm transition-all hover:bg-white/10 hover:border-white/20">
+                                Daftar Gratis
                             </a>
-                            <a href="{{ route('orders.index') }}" class="inline-flex items-center gap-2 rounded-2xl border border-slate-600 bg-slate-800/50 px-6 py-3.5 text-sm font-bold text-white backdrop-blur transition-all hover:border-slate-500 hover:bg-slate-800">
-                                <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/>
-                                </svg>
-                                Lihat Pesanan
-                            </a>
-                        </div>
+                        @endguest
                     </div>
-                    <div class="hidden lg:block">
-                        <div class="relative">
-                            <div class="absolute -left-6 -top-6 h-32 w-32 rounded-2xl bg-gradient-to-br from-blue-400 to-indigo-400 blur-2xl opacity-50"></div>
-                            <div class="relative grid grid-cols-2 gap-3">
-                                <div class="rounded-2xl bg-slate-800/80 p-4 backdrop-blur-sm">
-                                    <div class="flex h-12 w-12 items-center justify-center rounded-xl bg-blue-500/20">
-                                        <svg class="h-6 w-6 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/>
-                                        </svg>
-                                    </div>
-                                    <p class="mt-3 text-2xl font-extrabold text-white">{{ $products->count() }}</p>
-                                    <p class="text-xs font-medium text-slate-400">Produk</p>
+                </div>
+
+                {{-- Right Stats Cards --}}
+                <div class="hidden lg:block">
+                    <div class="relative">
+                        <div class="absolute -inset-4 rounded-3xl bg-gradient-to-r from-blue-500/10 to-violet-500/10 blur-2xl"></div>
+                        <div class="relative grid grid-cols-2 gap-4">
+                            <div class="glass-card-dark rounded-3xl p-6 transition-transform hover:-translate-y-1">
+                                <div class="flex h-14 w-14 items-center justify-center rounded-2xl bg-blue-500/20">
+                                    <svg class="h-7 w-7 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/></svg>
                                 </div>
-                                <div class="rounded-2xl bg-slate-800/80 p-4 backdrop-blur-sm">
-                                    <div class="flex h-12 w-12 items-center justify-center rounded-xl bg-indigo-500/20">
-                                        <svg class="h-6 w-6 text-indigo-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
-                                        </svg>
-                                    </div>
-                                    <p class="mt-3 text-2xl font-extrabold text-white">%</p>
-                                    <p class="text-xs font-medium text-slate-400">Promo Aktif</p>
+                                <p class="mt-4 text-3xl font-black text-white">{{ $products->count() }}</p>
+                                <p class="mt-1 text-sm font-medium text-slate-400">Total Produk</p>
+                            </div>
+                            <div class="glass-card-dark rounded-3xl p-6 transition-transform hover:-translate-y-1">
+                                <div class="flex h-14 w-14 items-center justify-center rounded-2xl bg-emerald-500/20">
+                                    <svg class="h-7 w-7 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
                                 </div>
+                                <p class="mt-4 text-3xl font-black text-white">100%</p>
+                                <p class="mt-1 text-sm font-medium text-slate-400">Fresh & Frozen</p>
+                            </div>
+                            <div class="glass-card-dark rounded-3xl p-6 transition-transform hover:-translate-y-1">
+                                <div class="flex h-14 w-14 items-center justify-center rounded-2xl bg-violet-500/20">
+                                    <svg class="h-7 w-7 text-violet-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                                </div>
+                                <p class="mt-4 text-3xl font-black text-white">24h</p>
+                                <p class="mt-1 text-sm font-medium text-slate-400">Fast Delivery</p>
+                            </div>
+                            <div class="glass-card-dark rounded-3xl p-6 transition-transform hover:-translate-y-1">
+                                <div class="flex h-14 w-14 items-center justify-center rounded-2xl bg-amber-500/20">
+                                    <svg class="h-7 w-7 text-amber-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z"/></svg>
+                                </div>
+                                <p class="mt-4 text-3xl font-black text-white">⭐ 4.9</p>
+                                <p class="mt-1 text-sm font-medium text-slate-400">Rating Toko</p>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
+        </div>
 
-            {{-- Quick Stats (Mobile) --}}
-            <div class="mb-8 grid grid-cols-2 gap-4 lg:hidden">
-                <div class="rounded-2xl border border-gray-100 bg-white p-4 shadow-sm">
-                    <div class="flex h-10 w-10 items-center justify-center rounded-xl bg-blue-50">
-                        <svg class="h-5 w-5 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/>
-                        </svg>
-                    </div>
-                    <p class="mt-2 text-xl font-extrabold text-gray-900">{{ $products->count() }}</p>
-                    <p class="text-xs font-medium text-gray-500">Produk Tersedia</p>
+        {{-- Wave separator --}}
+        <div class="absolute bottom-0 left-0 right-0">
+            <svg viewBox="0 0 1440 60" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-full">
+                <path d="M0 60L48 55C96 50 192 40 288 35C384 30 480 30 576 33.3C672 36.7 768 43.3 864 45C960 46.7 1056 43.3 1152 40C1248 36.7 1344 33.3 1392 31.7L1440 30V60H1392C1344 60 1248 60 1152 60C1056 60 960 60 864 60C768 60 672 60 576 60C480 60 384 60 288 60C192 60 96 60 48 60H0Z" fill="#0B0F1A"/>
+            </svg>
+        </div>
+    </section>
+
+    {{-- ── ALERT MESSAGES ──────────────────────────────────── --}}
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        @if(session('success'))
+            <div class="mt-6 flex animate-slide-down items-center gap-3 rounded-2xl border border-emerald-200/60 bg-gradient-to-r from-emerald-50 to-teal-50 p-4 shadow-lg shadow-emerald-500/5">
+                <div class="flex h-10 w-10 flex-none items-center justify-center rounded-xl bg-emerald-100">
+                    <svg class="h-5 w-5 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
                 </div>
-                <div class="rounded-2xl border border-gray-100 bg-white p-4 shadow-sm">
-                    <div class="flex h-10 w-10 items-center justify-center rounded-xl bg-indigo-50">
-                        <svg class="h-5 w-5 text-indigo-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
-                        </svg>
-                    </div>
-                    <p class="mt-2 text-xl font-extrabold text-gray-900">0</p>
-                    <p class="text-xs font-medium text-gray-500">Promo Berjalan</p>
+                <p class="text-sm font-semibold text-emerald-800">{{ session('success') }}</p>
+            </div>
+        @endif
+        @if(session('info'))
+            <div class="mt-6 flex animate-slide-down items-center gap-3 rounded-2xl border border-blue-200/60 bg-gradient-to-r from-blue-50 to-indigo-50 p-4 shadow-lg shadow-blue-500/5">
+                <div class="flex h-10 w-10 flex-none items-center justify-center rounded-xl bg-blue-100">
+                    <svg class="h-5 w-5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
                 </div>
+                <p class="text-sm font-semibold text-blue-800">{{ session('info') }}</p>
+            </div>
+        @endif
+    </div>
+
+    {{-- ── FEATURES BAR ────────────────────────────────────── --}}
+    <section class="mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8">
+        <div class="grid grid-cols-1 gap-4 sm:grid-cols-3">
+            @foreach([
+                ['icon' => 'M5 8h14M5 8a2 2 0 110-4h14a2 2 0 110 4M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8m-9 4h4', 'title' => 'Gratis Ongkir', 'desc' => 'Min. pembelian Rp 150.000', 'from' => 'from-blue-500', 'to' => 'to-indigo-500', 'bg' => 'bg-blue-50', 'text' => 'text-blue-600'],
+                ['icon' => 'M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z', 'title' => 'Pengiriman Cepat', 'desc' => 'Same-day delivery tersedia', 'from' => 'from-violet-500', 'to' => 'to-purple-500', 'bg' => 'bg-violet-50', 'text' => 'text-violet-600'],
+                ['icon' => 'M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z', 'title' => 'Produk Terjamin', 'desc' => '100% fresh & berkualitas', 'from' => 'from-emerald-500', 'to' => 'to-teal-500', 'bg' => 'bg-emerald-50', 'text' => 'text-emerald-600'],
+            ] as $feat)
+                <div class="group flex items-center gap-4 rounded-2xl border border-white/5 bg-[#161B29] p-5 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl hover:shadow-blue-900/20">
+                    <div class="flex h-14 w-14 flex-none items-center justify-center rounded-2xl {{ $feat['bg'] }} transition-transform duration-300 group-hover:scale-110">
+                        <svg class="h-7 w-7 {{ $feat['text'] }}" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="{{ $feat['icon'] }}"/></svg>
+                    </div>
+                    <div>
+                        <p class="text-sm font-bold text-white">{{ $feat['title'] }}</p>
+                        <p class="mt-0.5 text-xs font-medium text-slate-500">{{ $feat['desc'] }}</p>
+                    </div>
+                </div>
+            @endforeach
+        </div>
+    </section>
+
+    {{-- ── PRODUCTS SECTION ────────────────────────────────── --}}
+    <section id="products" class="mx-auto max-w-7xl px-4 pb-16 sm:px-6 lg:px-8">
+        {{-- Section Header + Search/Filter --}}
+        <div class="mb-8 flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
+            <div>
+                <h2 class="section-heading">🛒 Katalog Produk</h2>
+                <p class="section-subheading">{{ $products->count() }} produk tersedia untuk Anda</p>
             </div>
 
-            {{-- Products Section Header --}}
-            <div id="products" class="mb-6 flex items-end justify-between">
-                <div>
-                    <h3 class="text-2xl font-extrabold text-gray-900">Katalog Produk</h3>
-                    <p class="mt-1 text-sm font-medium text-gray-500">{{ $products->count() }} produk tersedia hari ini</p>
+            <form method="GET" action="{{ route('dashboard') }}" class="flex flex-wrap items-center gap-2">
+                <div class="relative flex-1 min-w-[180px]">
+                    <svg class="absolute left-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+                    <input type="text" name="search" value="{{ request('search') }}" placeholder="Cari produk..." class="input-field !pl-10 !py-2.5 !rounded-xl !text-sm">
                 </div>
-                <div class="hidden items-center gap-2 sm:flex">
-                    <button class="rounded-xl border border-gray-200 bg-white px-4 py-2 text-sm font-bold text-gray-700 shadow-sm">Semua</button>
-                    <button class="rounded-xl px-4 py-2 text-sm font-bold text-gray-500 hover:bg-gray-50">Terbaru</button>
-                    <button class="rounded-xl px-4 py-2 text-sm font-bold text-gray-500 hover:bg-gray-50">Terlaris</button>
-                </div>
-            </div>
+                <select name="stock_filter" class="input-field !w-auto !py-2.5 !rounded-xl !text-sm">
+                    <option value="">Semua Stok</option>
+                    <option value="available" {{ request('stock_filter') === 'available' ? 'selected' : '' }}>Tersedia</option>
+                    <option value="out" {{ request('stock_filter') === 'out' ? 'selected' : '' }}>Habis</option>
+                </select>
+                <select name="sort" class="input-field !w-auto !py-2.5 !rounded-xl !text-sm">
+                    <option value="newest" {{ request('sort') === 'newest' ? 'selected' : '' }}>Terbaru</option>
+                    <option value="price_asc" {{ request('sort') === 'price_asc' ? 'selected' : '' }}>Termurah</option>
+                    <option value="price_desc" {{ request('sort') === 'price_desc' ? 'selected' : '' }}>Termahal</option>
+                </select>
+                <button type="submit" class="btn-primary !py-2.5 !px-5 !rounded-xl !text-xs">
+                    <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z"/></svg>
+                    Filter
+                </button>
+                @if(request()->hasAny(['search','stock_filter','sort']))
+                    <a href="{{ route('dashboard') }}" class="btn-ghost !py-2.5 !px-4 !rounded-xl !text-xs">Reset</a>
+                @endif
+            </form>
+        </div>
 
-            {{-- Product Grid --}}
-            <div class="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-                @forelse($products as $product)
-                    <div class="group relative overflow-hidden rounded-3xl border border-gray-100 bg-white shadow-sm transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl">
-                        {{-- Discount Badge --}}
+        {{-- Product Grid --}}
+        @if($products->isEmpty())
+            <div class="flex flex-col items-center justify-center rounded-3xl border-2 border-dashed border-white/5 bg-[#161B29] py-24 text-center">
+                <div class="flex h-24 w-24 items-center justify-center rounded-full bg-[#0B0F1A]">
+                    <svg class="h-12 w-12 text-slate-700" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/></svg>
+                </div>
+                <h3 class="mt-6 text-xl font-bold text-white">Produk tidak ditemukan</h3>
+                <p class="mt-2 text-sm text-slate-500">Coba ubah kata kunci atau filter pencarian</p>
+            </div>
+        @else
+            <div class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+                @foreach($products as $product)
+                    <div class="product-card group">
+                        {{-- Badges --}}
                         @if($product->price > 50000)
                             <div class="absolute left-3 top-3 z-10">
-                                <span class="inline-flex items-center rounded-xl bg-red-500 px-2.5 py-1 text-xs font-bold text-white">
-                                    HOT
-                                </span>
+                                <span class="badge-hot">🔥 HOT</span>
                             </div>
                         @endif
-
-                        {{-- Stock Status Badge --}}
                         <div class="absolute right-3 top-3 z-10">
                             @if($product->stock > 10)
-                                <span class="inline-flex items-center gap-1 rounded-full bg-green-100 px-2.5 py-1 text-xs font-bold text-green-700">
-                                    <span class="h-1.5 w-1.5 rounded-full bg-green-500"></span>
-                                    Ready
+                                <span class="badge-success">
+                                    <span class="h-1.5 w-1.5 rounded-full bg-emerald-500"></span> Ready
                                 </span>
                             @elseif($product->stock > 0)
-                                <span class="inline-flex items-center gap-1 rounded-full bg-yellow-100 px-2.5 py-1 text-xs font-bold text-yellow-700">
-                                    <span class="h-1.5 w-1.5 rounded-full bg-yellow-500 animate-pulse"></span>
-                                    Terbatas
+                                <span class="badge-warning">
+                                    <span class="h-1.5 w-1.5 animate-pulse rounded-full bg-amber-500"></span> Terbatas
                                 </span>
                             @else
-                                <span class="inline-flex items-center gap-1 rounded-full bg-gray-100 px-2.5 py-1 text-xs font-bold text-gray-500">
-                                    <span class="h-1.5 w-1.5 rounded-full bg-gray-400"></span>
-                                    Sold Out
-                                </span>
+                                <span class="badge-danger">Habis</span>
                             @endif
                         </div>
 
-                        {{-- Product Image --}}
-                        <div class="relative aspect-square overflow-hidden bg-gradient-to-br from-gray-50 to-gray-100">
+                        {{-- Image --}}
+                        <div class="relative aspect-[4/3] overflow-hidden bg-gradient-to-br from-gray-50 to-gray-100">
                             @if($product->image)
-                                <img src="{{ $product->image_url }}" alt="{{ $product->name }}" class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-110" />
+                                <img src="{{ $product->image_url }}" alt="{{ $product->name }}" class="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110" />
                             @else
-                                <div class="flex h-full flex-col items-center justify-center gap-2">
-                                    <svg class="h-20 w-20 text-gray-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/>
-                                    </svg>
-                                    <span class="text-xs font-medium text-gray-300">No Image</span>
+                                <div class="flex h-full flex-col items-center justify-center gap-3">
+                                    <div class="flex h-20 w-20 items-center justify-center rounded-3xl bg-gray-100">
+                                        <svg class="h-10 w-10 text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+                                    </div>
+                                    <span class="text-xs font-semibold text-gray-400">No Image</span>
                                 </div>
                             @endif
-                            
-                            {{-- Quick Add Overlay --}}
-                            <div class="absolute inset-x-0 bottom-0 translate-y-full bg-gradient-to-t from-black/60 to-transparent p-4 transition-transform duration-300 group-hover:translate-y-0">
-                                <a href="{{ route('products.show', $product) }}" class="flex w-full items-center justify-center gap-2 rounded-xl bg-white/90 py-2.5 text-sm font-bold text-gray-900 backdrop-blur-sm hover:bg-white">
-                                    <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/>
-                                    </svg>
-                                    Quick View
+
+                            {{-- Hover Overlay --}}
+                            <div class="absolute inset-0 flex items-end bg-gradient-to-t from-black/50 via-transparent to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100">
+                                <a href="{{ route('products.show', $product) }}" class="m-3 flex w-full items-center justify-center gap-2 rounded-2xl bg-white/95 py-3 text-sm font-bold text-gray-900 backdrop-blur transition-all hover:bg-white">
+                                    <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/></svg>
+                                    Lihat Detail
                                 </a>
                             </div>
                         </div>
 
-                        {{-- Product Info --}}
-                        <div class="p-4">
-                            <h4 class="text-base font-extrabold text-gray-900 line-clamp-2 leading-tight">{{ $product->name }}</h4>
-                            <p class="mt-1.5 text-xs font-medium text-gray-500 line-clamp-2 leading-relaxed">{{ $product->description }}</p>
-                            
+                        {{-- Info --}}
+                        <div class="p-5">
+                            <h4 class="text-sm font-bold text-white line-clamp-2 leading-snug">{{ $product->name }}</h4>
+                            <p class="mt-2 text-xs text-slate-500 line-clamp-2 leading-relaxed">{{ $product->description }}</p>
+
                             <div class="mt-4 flex items-end justify-between">
                                 <div>
-                                    <span class="text-xl font-extrabold text-gray-900">Rp {{ number_format($product->price,0,',','.') }}</span>
-                                    <p class="text-xs font-medium text-gray-400">Stok: {{ $product->stock }}</p>
+                                    <p class="text-xl font-black text-white">Rp {{ number_format($product->price, 0, ',', '.') }}</p>
+                                    <p class="mt-0.5 text-xs font-medium text-slate-500">Stok: {{ $product->stock }}</p>
                                 </div>
                             </div>
 
-                            {{-- Add to Cart --}}
+                            {{-- Action Button --}}
                             <div class="mt-4">
                                 @if($product->stock > 0)
-                                    <form action="{{ route('cart.add') }}" method="POST" class="flex gap-2">
-                                        @csrf
-                                        <input type="hidden" name="product_id" value="{{ $product->id }}">
-                                        <input type="number" name="quantity" value="1" min="1" max="{{ $product->stock }}" class="w-16 flex-none rounded-xl border border-gray-200 px-2 py-2.5 text-center text-sm font-bold text-gray-700 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-200" />
-                                        <button type="submit" class="flex-1 flex items-center justify-center gap-1.5 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 py-2.5 text-sm font-bold text-white shadow-md transition-all hover:shadow-lg hover:shadow-blue-500/30">
-                                            <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"/>
-                                            </svg>
-                                            Add
-                                        </button>
-                                    </form>
+                                    @auth
+                                        <form action="{{ route('cart.add') }}" method="POST" class="flex gap-2">
+                                            @csrf
+                                            <input type="hidden" name="product_id" value="{{ $product->id }}">
+                                            <input type="number" name="quantity" value="1" min="1" max="{{ $product->stock }}" class="w-16 flex-none rounded-xl border-0 bg-[#0B0F1A] px-2 py-2.5 text-center text-sm font-bold text-white ring-1 ring-white/10 focus:ring-2 focus:ring-blue-500" />
+                                            <button type="submit" class="btn-primary flex-1 !py-2.5 !rounded-xl !text-xs !shadow-md">
+                                                <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"/></svg>
+                                                Beli
+                                            </button>
+                                        </form>
+                                    @else
+                                        <a href="{{ route('login') }}" class="btn-primary w-full !py-2.5 !rounded-xl !text-xs !shadow-md">
+                                            <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1"/></svg>
+                                            Login untuk Beli
+                                        </a>
+                                    @endauth
                                 @else
-                                    <button disabled class="w-full flex items-center justify-center gap-2 rounded-xl bg-gray-100 py-2.5 text-sm font-bold text-gray-400">
-                                        <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18.364 18.364A9 9 0 005.636 5.636m12.728 12.728A9 9 0 015.636 18.364m0 0L12 21m0 0l-7.364 7.364M12 21v-7.364"/>
-                                        </svg>
+                                    <button disabled class="flex w-full items-center justify-center gap-2 rounded-xl bg-gray-100 py-2.5 text-xs font-bold text-gray-400 cursor-not-allowed">
                                         Stok Habis
                                     </button>
                                 @endif
                             </div>
                         </div>
                     </div>
-                @empty
-                    <div class="col-span-full">
-                        <div class="flex flex-col items-center justify-center rounded-3xl border border-gray-100 bg-white py-20 text-center">
-                            <div class="mb-6 flex h-24 w-24 items-center justify-center rounded-full bg-gradient-to-br from-gray-50 to-gray-100">
-                                <svg class="h-12 w-12 text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/>
-                                </svg>
-                            </div>
-                            <h4 class="text-xl font-extrabold text-gray-900">Belum Ada Produk</h4>
-                            <p class="mt-2 max-w-sm text-sm font-medium text-gray-500">Saat ini katalog produk masih kosong. Silakan tambah produk terlebih dahulu.</p>
-                            <button class="mt-6 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 px-6 py-3 text-sm font-bold text-white shadow-lg shadow-blue-500/30">
-                                Tambah Produk
-                            </button>
-                        </div>
-                    </div>
-                @endforelse
+                @endforeach
             </div>
-
-            {{-- Features Section --}}
-            <div class="mt-12 grid grid-cols-1 gap-4 sm:grid-cols-3">
-                <div class="flex items-center gap-4 rounded-2xl border border-gray-100 bg-white p-5 shadow-sm">
-                    <div class="flex h-14 w-14 flex-none items-center justify-center rounded-2xl bg-blue-50">
-                        <svg class="h-7 w-7 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 8h14M5 8a2 2 0 110-4h14a2 2 0 110 4M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8m-9 4h4"/>
-                        </svg>
-                    </div>
-                    <div>
-                        <p class="text-sm font-extrabold text-gray-900">Gratis Ongkir</p>
-                        <p class="text-xs font-medium text-gray-500">Min. pembelian Rp 150rb</p>
-                    </div>
-                </div>
-                <div class="flex items-center gap-4 rounded-2xl border border-gray-100 bg-white p-5 shadow-sm">
-                    <div class="flex h-14 w-14 flex-none items-center justify-center rounded-2xl bg-indigo-50">
-                        <svg class="h-7 w-7 text-indigo-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
-                        </svg>
-                    </div>
-                    <div>
-                        <p class="text-sm font-extrabold text-gray-900">Pengiriman Cepat</p>
-                        <p class="text-xs font-medium text-gray-500">Same day delivery</p>
-                    </div>
-                </div>
-                <div class="flex items-center gap-4 rounded-2xl border border-gray-100 bg-white p-5 shadow-sm">
-                    <div class="flex h-14 w-14 flex-none items-center justify-center rounded-2xl bg-green-50">
-                        <svg class="h-7 w-7 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/>
-                        </svg>
-                    </div>
-                    <div>
-                        <p class="text-sm font-extrabold text-gray-900">Produk Berkualitas</p>
-                        <p class="text-xs font-medium text-gray-500">100% fresh & frozen</p>
-                    </div>
-                </div>
-            </div>
-
-            {{-- Footer --}}
-            <div class="mt-12 border-t border-gray-100 pt-8">
-                <div class="flex flex-col items-center justify-between gap-4 md:flex-row">
-                    <div class="flex items-center gap-3">
-                        <div class="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-blue-600 to-indigo-600 text-white">
-                            <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
-                            </svg>
-                        </div>
-                        <div>
-                            <span class="text-sm font-extrabold text-gray-900">Frozymart</span>
-                            <p class="text-xs font-medium text-gray-400">Premium Frozen Food</p>
-                        </div>
-                    </div>
-                    <p class="text-sm font-medium text-gray-400">© 2026 Frozymart. All rights reserved.</p>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <style>
-        @keyframes slide-down {
-            from { opacity: 0; transform: translateY(-10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        .animate-slide-down {
-            animation: slide-down 0.3s ease-out;
-        }
-    </style>
-</x-app-layout>
+        @endif
+    </section>
+</div>
+@endsection

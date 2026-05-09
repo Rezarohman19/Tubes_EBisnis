@@ -7,14 +7,14 @@ use App\Http\Controllers\ProductController;
 use Illuminate\Support\Facades\Route;
 
 // ─── PUBLIC ROUTES (Tanpa Login) ─────────────────────────────────────────────
-Route::get('/', [ProductController::class, 'publicHome'])->name('home');
+Route::get('/', [ProductController::class, 'index'])->name('home');
+Route::get('/dashboard', [ProductController::class, 'index'])->name('dashboard');
+
 Route::get('/products', [ProductController::class, 'productsIndex'])->name('products.index');
 Route::get('/products/{product}', [ProductController::class, 'show'])->name('products.show');
 
 // ─── USER ROUTES (Pembeli) ───────────────────────────────────────────────────
 Route::middleware('auth')->group(function () {
-    Route::get('/dashboard', [ProductController::class, 'index'])->name('dashboard');
-
     // Keranjang Belanja
     Route::get('/cart', [ProductController::class, 'cart'])->name('cart.index');
     Route::post('/cart', [ProductController::class, 'addToCart'])->name('cart.add');
