@@ -6,15 +6,14 @@ use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\ProductController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', function () {
-    return view('welcome');
-});
+// ─── PUBLIC ROUTES (Tanpa Login) ─────────────────────────────────────────────
+Route::get('/', [ProductController::class, 'publicHome'])->name('home');
+Route::get('/products', [ProductController::class, 'productsIndex'])->name('products.index');
+Route::get('/products/{product}', [ProductController::class, 'show'])->name('products.show');
 
 // ─── USER ROUTES (Pembeli) ───────────────────────────────────────────────────
 Route::middleware('auth')->group(function () {
     Route::get('/dashboard', [ProductController::class, 'index'])->name('dashboard');
-    Route::get('/products', [ProductController::class, 'productsIndex'])->name('products.index');
-    Route::get('/products/{product}', [ProductController::class, 'show'])->name('products.show');
 
     // Keranjang Belanja
     Route::get('/cart', [ProductController::class, 'cart'])->name('cart.index');
@@ -26,11 +25,13 @@ Route::middleware('auth')->group(function () {
     Route::get('/checkout', [ProductController::class, 'checkout'])->name('checkout');
     Route::post('/checkout', [ProductController::class, 'placeOrder'])->name('checkout.place');
     Route::post('/checkout/apply-coupon', [ProductController::class, 'applyCoupon'])->name('checkout.coupon');
+    Route::post('/checkout/remove-coupon', [ProductController::class, 'removeCoupon'])->name('checkout.coupon.remove');
 
     // Pesanan & Riwayat Pembayaran
     Route::get('/orders', [ProductController::class, 'orders'])->name('orders.index');
     Route::get('/orders/{order}', [ProductController::class, 'orderShow'])->name('orders.show');
     Route::post('/orders/{order}/confirm-payment', [ProductController::class, 'confirmPayment'])->name('orders.payment.confirm');
+    Route::post('/orders/{order}/complete', [ProductController::class, 'completeOrder'])->name('orders.complete');
 
     // Integrasi Midtrans
     Route::get('/payment/{order}/pay', [MidtransController::class, 'createSnap'])->name('payment.snap');
@@ -59,8 +60,6 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
     Route::get('/products/create', [Admin\ProductController::class, 'create'])->name('products.create');
     Route::post('/products', [Admin\ProductController::class, 'store'])->name('products.store');
     Route::get('/products/{product}/edit', [Admin\ProductController::class, 'edit'])->name('products.edit');
-    
-    // Gunakan PATCH untuk update (Sesuai Controller gabungan)
     Route::patch('/products/{product}', [Admin\ProductController::class, 'update'])->name('products.update');
     Route::delete('/products/{product}', [Admin\ProductController::class, 'destroy'])->name('products.destroy');
 
