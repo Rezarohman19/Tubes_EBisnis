@@ -1,0 +1,6 @@
+- [x] Update `resources/views/dashboard.blade.php`: ganti aksen orange/pink -> biru-putih sesuai katalog/keranjang/pesanan
+- [x] Tambahkan/rapikan interaksi UI pada beranda (hover/focus ring/glow) agar konsisten
+- [x] Update komponen testimonial/CTA/featured products di beranda supaya konsisten warna
+- [x] Update `resources/views/layouts/dashboard.blade.php` (opsional) jika masih ada orange/pink yang terlihat pada beranda
+- [x] Jalankan build/dev untuk memastikan Tailwind/Vite tidak error
+- [x] Cek hasil di browser (beranda)

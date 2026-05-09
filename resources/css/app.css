@@ -16,6 +16,11 @@
     html {
         scroll-behavior: smooth;
     }
+
+    [x-cloak] {
+        display: none !important;
+    }
+
     body {
         @apply bg-[#0B0F1A] text-slate-300;
         -webkit-font-smoothing: antialiased;
