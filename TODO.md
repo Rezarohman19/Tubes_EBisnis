@@ -1,6 +1,12 @@
-- [x] Update `resources/views/dashboard.blade.php`: ganti aksen orange/pink -> biru-putih sesuai katalog/keranjang/pesanan
-- [x] Tambahkan/rapikan interaksi UI pada beranda (hover/focus ring/glow) agar konsisten
-- [x] Update komponen testimonial/CTA/featured products di beranda supaya konsisten warna
-- [x] Update `resources/views/layouts/dashboard.blade.php` (opsional) jika masih ada orange/pink yang terlihat pada beranda
-- [x] Jalankan build/dev untuk memastikan Tailwind/Vite tidak error
-- [x] Cek hasil di browser (beranda)
+# TODO
+
+- [x] Identifikasi lokasi section "Produk Unggulan" dan "Katalog Visual Produk" di `resources/views/dashboard.blade.php`.
+- [ ] Edit `resources/views/dashboard.blade.php`:
+  - [ ] Perbaiki background & spacing pada section "Produk Unggulan".
+  - [ ] Tambahkan badge dinamis (Best Seller/Terlaris/Diskon) dan tombol aksi pada card.
+  - [ ] Tambahkan skeleton/placeholder saat data produk kosong/kurang.
+  - [ ] Ubah "Katalog Visual Produk" dari horizontal scroller menjadi grid responsif 3–4 kolom.
+  - [ ] Tambahkan skeleton/placeholder untuk katalog.
+  - [ ] Pastikan hover efek zoom + shadow pada card.
+- [ ] Jalankan dev server / cek halaman untuk memastikan layout responsif.
+

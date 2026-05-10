@@ -159,4 +159,35 @@
     .text-gradient-warm {
         @apply bg-gradient-to-r from-orange-400 via-rose-400 to-pink-400 bg-clip-text text-transparent;
     }
+
+    /* ── Hero Animations ───────────────────────────────────── */
+    .hero-title {
+        animation: fade-in-up 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .hero-subtitle {
+        animation: fade-in-up 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.1s both;
+    }
+    .hero-buttons {
+        animation: fade-in-up 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.2s both;
+    }
+    .hero-search {
+        animation: fade-in-up 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.3s both;
+    }
+    .hero-features {
+        animation: fade-in-up 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.4s both;
+    }
+
+    /* ── Glow Effect ───────────────────────────────────────── */
+    .glow-blue {
+        box-shadow: 0 0 32px rgba(59, 130, 246, 0.4);
+    }
+    .glow-blue-hover:hover {
+        box-shadow: 0 0 48px rgba(59, 130, 246, 0.6);
+    }
+    .glow-purple {
+        box-shadow: 0 0 32px rgba(168, 85, 247, 0.3);
+    }
+    .glow-purple-hover:hover {
+        box-shadow: 0 0 48px rgba(168, 85, 247, 0.5);
+    }
 }

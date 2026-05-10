@@ -1,28 +1,28 @@
 <!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+<html lang="<?php echo e(str_replace('_', '-', app()->getLocale())); ?>">
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <meta name="csrf-token" content="{{ csrf_token() }}">
+        <meta name="csrf-token" content="<?php echo e(csrf_token()); ?>">
         <meta name="description" content="Frozymart — Premium Frozen Food Store">
 
-        <title>{{ config('app.name', 'Frozymart') }} — Premium Frozen Food</title>
+        <title><?php echo e(config('app.name', 'Frozymart')); ?> — Premium Frozen Food</title>
 
         <!-- Fonts -->
         <link rel="preconnect" href="https://fonts.bunny.net">
         <link href="https://fonts.bunny.net/css?family=inter:300,400,500,600,700,800,900&display=swap" rel="stylesheet" />
 
         <!-- Scripts -->
-        @vite(['resources/css/app.css', 'resources/js/app.js'])
+        <?php echo app('Illuminate\Foundation\Vite')(['resources/css/app.css', 'resources/js/app.js']); ?>
     </head>
     <body class="font-sans antialiased bg-slate-900 text-slate-100">
         <div class="min-h-screen flex flex-col">
-            {{-- ── NAVBAR ─────────────────────────────────────────────── --}}
+            
             <header class="sticky top-0 z-50 border-b border-white/5 bg-[#0B0F1A]/85 shadow-xl shadow-black/30 backdrop-blur-2xl">
                 <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
                     <div class="flex h-16 items-center justify-between gap-8">
-                        {{-- Logo --}}
-                        <a href="{{ route('home') }}" class="group flex items-center gap-3 flex-shrink-0">
+                        
+                        <a href="<?php echo e(route('home')); ?>" class="group flex items-center gap-3 flex-shrink-0">
                             <div class="relative flex h-11 w-11 items-center justify-center rounded-xl bg-gradient-to-br from-blue-500 via-indigo-500 to-violet-500 shadow-lg shadow-blue-500/30 transition-all duration-300 group-hover:scale-110 group-hover:shadow-xl">
                                 <svg class="h-6 w-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/>
@@ -34,46 +34,47 @@
                             </div>
                         </a>
 
-                        {{-- Center Nav (Hidden on mobile) --}}
+                        
                         <nav class="hidden items-center gap-2 lg:flex">
-                            <a href="{{ route('home') }}" class="rounded-xl px-4 py-2.5 text-sm font-semibold transition-all duration-200 {{ request()->routeIs('home') || request()->routeIs('dashboard') ? 'text-white bg-gradient-to-r from-blue-500/20 to-indigo-500/20 border border-blue-400/30' : 'text-slate-300 hover:text-white hover:bg-white/5' }}">
+                            <a href="<?php echo e(route('home')); ?>" class="rounded-xl px-4 py-2.5 text-sm font-semibold transition-all duration-200 <?php echo e(request()->routeIs('home') || request()->routeIs('dashboard') ? 'text-white bg-gradient-to-r from-blue-500/20 to-indigo-500/20 border border-blue-400/30' : 'text-slate-300 hover:text-white hover:bg-white/5'); ?>">
                                 Beranda
                             </a>
-                            <a href="{{ route('products.index') }}" class="rounded-xl px-4 py-2.5 text-sm font-semibold transition-all duration-200 {{ request()->routeIs('products.*') ? 'text-white bg-gradient-to-r from-blue-500/20 to-indigo-500/20 border border-blue-400/30' : 'text-slate-300 hover:text-white hover:bg-white/5' }}">
+                            <a href="<?php echo e(route('products.index')); ?>" class="rounded-xl px-4 py-2.5 text-sm font-semibold transition-all duration-200 <?php echo e(request()->routeIs('products.*') ? 'text-white bg-gradient-to-r from-blue-500/20 to-indigo-500/20 border border-blue-400/30' : 'text-slate-300 hover:text-white hover:bg-white/5'); ?>">
                                 Katalog
                             </a>
-                            @auth
-                                <a href="{{ route('cart.index') }}" class="relative rounded-xl px-4 py-2.5 text-sm font-semibold transition-all duration-200 {{ request()->routeIs('cart.*') ? 'text-white bg-gradient-to-r from-blue-500/20 to-indigo-500/20 border border-blue-400/30' : 'text-slate-300 hover:text-white hover:bg-white/5' }}">
+                            <?php if(auth()->guard()->check()): ?>
+                                <a href="<?php echo e(route('cart.index')); ?>" class="relative rounded-xl px-4 py-2.5 text-sm font-semibold transition-all duration-200 <?php echo e(request()->routeIs('cart.*') ? 'text-white bg-gradient-to-r from-blue-500/20 to-indigo-500/20 border border-blue-400/30' : 'text-slate-300 hover:text-white hover:bg-white/5'); ?>">
                                     Keranjang
-                                    @if(session('cart') && count(session('cart')) > 0)
-                                        <span class="absolute -right-1 -top-1 flex h-5 w-5 items-center justify-center rounded-full bg-gradient-to-r from-blue-500 to-indigo-500 text-[9px] font-bold text-white shadow-lg shadow-blue-500/40">{{ count(session('cart')) }}</span>
-                                    @endif
+                                    <?php if(session('cart') && count(session('cart')) > 0): ?>
+                                        <span class="absolute -right-1 -top-1 flex h-5 w-5 items-center justify-center rounded-full bg-gradient-to-r from-blue-500 to-indigo-500 text-[9px] font-bold text-white shadow-lg shadow-blue-500/40"><?php echo e(count(session('cart'))); ?></span>
+                                    <?php endif; ?>
                                 </a>
-                                <a href="{{ route('orders.index') }}" class="rounded-xl px-4 py-2.5 text-sm font-semibold transition-all duration-200 {{ request()->routeIs('orders.*') ? 'text-white bg-gradient-to-r from-blue-500/20 to-indigo-500/20 border border-blue-400/30' : 'text-slate-300 hover:text-white hover:bg-white/5' }}">
+                                <a href="<?php echo e(route('orders.index')); ?>" class="rounded-xl px-4 py-2.5 text-sm font-semibold transition-all duration-200 <?php echo e(request()->routeIs('orders.*') ? 'text-white bg-gradient-to-r from-blue-500/20 to-indigo-500/20 border border-blue-400/30' : 'text-slate-300 hover:text-white hover:bg-white/5'); ?>">
                                     Pesanan
                                 </a>
-                            @endauth
+                            <?php endif; ?>
                         </nav>
 
-                        {{-- Right Actions --}}
+                        
                         <div class="flex items-center gap-4 ml-auto">
-                            @auth
-                                <a href="{{ route('cart.index') }}" class="relative flex h-10 w-10 items-center justify-center rounded-xl border border-white/10 bg-white/5 text-slate-400 transition-all hover:border-blue-400/50 hover:text-blue-300 hover:bg-blue-500/10 lg:hidden">
+                            <?php if(auth()->guard()->check()): ?>
+                                <a href="<?php echo e(route('cart.index')); ?>" class="relative flex h-10 w-10 items-center justify-center rounded-xl border border-white/10 bg-white/5 text-slate-400 transition-all hover:border-blue-400/50 hover:text-blue-300 hover:bg-blue-500/10 lg:hidden">
                                     <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"/>
                                     </svg>
-                                    @if(session('cart') && count(session('cart')) > 0)
-                                        <span class="absolute -right-1 -top-1 flex h-4 w-4 items-center justify-center rounded-full bg-gradient-to-r from-blue-500 to-indigo-500 text-[8px] font-bold text-white">{{ count(session('cart')) }}</span>
-                                    @endif
+                                    <?php if(session('cart') && count(session('cart')) > 0): ?>
+                                        <span class="absolute -right-1 -top-1 flex h-4 w-4 items-center justify-center rounded-full bg-gradient-to-r from-blue-500 to-indigo-500 text-[8px] font-bold text-white"><?php echo e(count(session('cart'))); ?></span>
+                                    <?php endif; ?>
                                 </a>
 
-                                {{-- User Dropdown --}}
+                                
                                 <div x-data="{ open: false }" class="relative">
                                     <button @click="open = !open" class="flex items-center gap-2.5 rounded-xl border border-white/10 bg-white/5 px-3 py-2 text-sm font-semibold text-slate-300 transition-all duration-200 hover:border-blue-400/30 hover:bg-blue-500/10 hover:text-white">
                                         <div class="flex h-6 w-6 items-center justify-center rounded-lg bg-gradient-to-br from-blue-500 to-indigo-500 text-[9px] font-bold text-white">
-                                            {{ strtoupper(substr(Auth::user()->name, 0, 1)) }}
+                                            <?php echo e(strtoupper(substr(Auth::user()->name, 0, 1))); ?>
+
                                         </div>
-                                        <span class="hidden sm:inline">{{ Auth::user()->name }}</span>
+                                        <span class="hidden sm:inline"><?php echo e(Auth::user()->name); ?></span>
                                         <svg class="h-4 w-4 text-slate-500 transition-transform duration-200" :class="{ 'rotate-180': open }" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
                                         </svg>
@@ -85,27 +86,27 @@
                                             <p class="text-xs font-bold text-slate-400 uppercase tracking-[0.24em]">Menu Akun</p>
                                         </div>
 
-                                        @if(Auth::user()->role === 'admin')
-                                            <a href="{{ route('admin.dashboard') }}" class="flex items-center gap-3 px-5 py-3 text-sm font-semibold text-blue-300 transition-all hover:bg-blue-500/10 border-b border-white/5">
+                                        <?php if(Auth::user()->role === 'admin'): ?>
+                                            <a href="<?php echo e(route('admin.dashboard')); ?>" class="flex items-center gap-3 px-5 py-3 text-sm font-semibold text-blue-300 transition-all hover:bg-blue-500/10 border-b border-white/5">
                                                 <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
                                                 Admin Panel
                                             </a>
-                                        @endif
+                                        <?php endif; ?>
 
-                                        <a href="{{ route('profile.edit') }}" class="flex items-center gap-3 px-5 py-3 text-sm font-semibold text-slate-300 transition-all hover:bg-white/5 hover:text-white">
+                                        <a href="<?php echo e(route('profile.edit')); ?>" class="flex items-center gap-3 px-5 py-3 text-sm font-semibold text-slate-300 transition-all hover:bg-white/5 hover:text-white">
                                             <svg class="h-4 w-4 text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/></svg>
                                             Profil Saya
                                         </a>
 
-                                        <a href="{{ route('payment.history') }}" class="flex items-center gap-3 px-5 py-3 text-sm font-semibold text-slate-300 transition-all hover:bg-white/5 hover:text-white">
+                                        <a href="<?php echo e(route('payment.history')); ?>" class="flex items-center gap-3 px-5 py-3 text-sm font-semibold text-slate-300 transition-all hover:bg-white/5 hover:text-white">
                                             <svg class="h-4 w-4 text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"/></svg>
                                             Riwayat Bayar
                                         </a>
 
                                         <div class="border-t border-white/5"></div>
 
-                                        <form method="POST" action="{{ route('logout') }}">
-                                            @csrf
+                                        <form method="POST" action="<?php echo e(route('logout')); ?>">
+                                            <?php echo csrf_field(); ?>
                                             <button type="submit" class="flex w-full items-center gap-3 px-5 py-3 text-sm font-semibold text-red-400 transition-all hover:bg-red-500/10 hover:text-red-300">
                                                 <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"/></svg>
                                                 Keluar
@@ -113,26 +114,26 @@
                                         </form>
                                     </div>
                                 </div>
-                            @else
-                                <a href="{{ route('login') }}" class="rounded-xl px-4 py-2.5 text-sm font-semibold text-slate-300 transition-all hover:text-white hover:bg-white/5">Masuk</a>
-                                <a href="{{ route('register') }}" class="rounded-xl bg-gradient-to-r from-blue-500 to-indigo-500 px-5 py-2.5 text-sm font-semibold text-white shadow-lg shadow-blue-500/20 transition-all hover:scale-105 hover:shadow-blue-500/30">Daftar</a>
-                            @endauth
+                            <?php else: ?>
+                                <a href="<?php echo e(route('login')); ?>" class="rounded-xl px-4 py-2.5 text-sm font-semibold text-slate-300 transition-all hover:text-white hover:bg-white/5">Masuk</a>
+                                <a href="<?php echo e(route('register')); ?>" class="rounded-xl bg-gradient-to-r from-blue-500 to-indigo-500 px-5 py-2.5 text-sm font-semibold text-white shadow-lg shadow-blue-500/20 transition-all hover:scale-105 hover:shadow-blue-500/30">Daftar</a>
+                            <?php endif; ?>
                         </div>
                     </div>
                 </div>
             </header>
 
-            {{-- ── MAIN CONTENT ───────────────────────────────────── --}}
+            
             <main class="flex-1">
-                @yield('content')
+                <?php echo $__env->yieldContent('content'); ?>
             </main>
 
-            {{-- ── FOOTER ─────────────────────────────────────────── --}}
+            
             <footer class="border-t border-white/5 bg-gradient-to-b from-[#0B0F1A] via-[#050916] to-black text-slate-300">
                 <div class="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
-                    {{-- Main Footer Grid --}}
+                    
                     <div class="grid gap-12 sm:grid-cols-2 lg:grid-cols-5">
-                        {{-- Brand Section --}}
+                        
                         <div class="space-y-5 lg:col-span-2">
                             <div class="inline-flex items-center gap-3">
                                 <div class="flex h-12 w-12 items-center justify-center rounded-2xl bg-gradient-to-br from-blue-500 via-indigo-500 to-violet-500 shadow-lg shadow-blue-500/20 transition-all duration-300 group-hover:shadow-blue-500/40">
@@ -147,7 +148,7 @@
                             </div>
                             <p class="max-w-xs text-sm leading-relaxed text-slate-400">Koleksi frozen food premium dengan kualitas terbaik, pengiriman cepat, dan harga kompetitif untuk keluarga Indonesia.</p>
                             
-                            {{-- Social Media Icons --}}
+                            
                             <div class="flex gap-2.5 pt-3">
                                 <a href="https://www.instagram.com/frozy.mart" target="_blank" rel="noopener noreferrer" class="group flex h-10 w-10 items-center justify-center rounded-full border border-white/10 bg-gradient-to-br from-white/5 to-white/[0.02] text-slate-400 shadow-sm shadow-white/5 transition-all duration-300 hover:-translate-y-1 hover:border-pink-400/50 hover:bg-pink-500/10 hover:text-pink-300 hover:shadow-lg hover:shadow-pink-500/20">
                                     <svg class="h-5 w-5" fill="currentColor" viewBox="0 0 24 24"><path d="M7.75 2h8.5A5.75 5.75 0 0122 7.75v8.5A5.75 5.75 0 0116.25 22h-8.5A5.75 5.75 0 012 16.25v-8.5A5.75 5.75 0 017.75 2zm0 1.5A4.25 4.25 0 003.5 7.75v8.5A4.25 4.25 0 007.75 20.5h8.5A4.25 4.25 0 0020.5 16.25v-8.5A4.25 4.25 0 0016.25 3.5h-8.5zm8.75 2.75a.75.75 0 110 1.5.75.75 0 010-1.5zM12 7a5 5 0 110 10 5 5 0 010-10zm0 1.5a3.5 3.5 0 100 7 3.5 3.5 0 000-7z"/></svg>
@@ -164,30 +165,30 @@
                             </div>
                         </div>
 
-                        {{-- Menu Links --}}
+                        
                         <div class="space-y-5">
                             <h4 class="text-xs font-bold uppercase tracking-[0.24em] text-white">Navigasi</h4>
                             <ul class="space-y-3">
-                                <li><a href="{{ route('home') }}" class="text-sm text-slate-400 transition-all duration-200 hover:text-white hover:translate-x-0.5 inline-flex items-center gap-1.5">
+                                <li><a href="<?php echo e(route('home')); ?>" class="text-sm text-slate-400 transition-all duration-200 hover:text-white hover:translate-x-0.5 inline-flex items-center gap-1.5">
                                     <span class="h-1 w-1 rounded-full bg-gradient-to-r from-blue-400 to-indigo-400 opacity-0 transition-opacity group-hover:opacity-100"></span>
                                     Beranda
                                 </a></li>
-                                <li><a href="{{ route('products.index') }}" class="text-sm text-slate-400 transition-all duration-200 hover:text-white hover:translate-x-0.5 inline-flex items-center gap-1.5">
+                                <li><a href="<?php echo e(route('products.index')); ?>" class="text-sm text-slate-400 transition-all duration-200 hover:text-white hover:translate-x-0.5 inline-flex items-center gap-1.5">
                                     <span class="h-1 w-1 rounded-full bg-gradient-to-r from-blue-400 to-indigo-400 opacity-0"></span>
                                     Katalog Produk
                                 </a></li>
-                                <li><a href="{{ route('home') }}#features" class="text-sm text-slate-400 transition-all duration-200 hover:text-white hover:translate-x-0.5 inline-flex items-center gap-1.5">
+                                <li><a href="<?php echo e(route('home')); ?>#features" class="text-sm text-slate-400 transition-all duration-200 hover:text-white hover:translate-x-0.5 inline-flex items-center gap-1.5">
                                     <span class="h-1 w-1 rounded-full bg-gradient-to-r from-blue-400 to-indigo-400 opacity-0"></span>
                                     Keunggulan
                                 </a></li>
-                                <li><a href="{{ route('home') }}#contact" class="text-sm text-slate-400 transition-all duration-200 hover:text-white hover:translate-x-0.5 inline-flex items-center gap-1.5">
+                                <li><a href="<?php echo e(route('home')); ?>#contact" class="text-sm text-slate-400 transition-all duration-200 hover:text-white hover:translate-x-0.5 inline-flex items-center gap-1.5">
                                     <span class="h-1 w-1 rounded-full bg-gradient-to-r from-blue-400 to-indigo-400 opacity-0"></span>
                                     Hubungi Kami
                                 </a></li>
                             </ul>
                         </div>
 
-                        {{-- Contact Info --}}
+                        
                         <div class="space-y-5">
                             <h4 class="text-xs font-bold uppercase tracking-[0.24em] text-white">Hubungi</h4>
                             <ul class="space-y-3.5">
@@ -228,7 +229,7 @@
                             </ul>
                         </div>
 
-                        {{-- Legal & Info --}}
+                        
                         <div class="space-y-5">
                             <h4 class="text-xs font-bold uppercase tracking-[0.24em] text-white">Informasi</h4>
                             <ul class="space-y-3">
@@ -252,10 +253,10 @@
                         </div>
                     </div>
 
-                    {{-- Divider Line --}}
+                    
                     <div class="my-10 border-t border-gradient-to-r from-white/0 via-white/10 to-white/0"></div>
 
-                    {{-- Bottom Footer --}}
+                    
                     <div class="flex flex-col items-center justify-between gap-4 sm:flex-row">
                         <p class="text-sm text-slate-400">© 2026 <span class="font-semibold text-white">Frozymart</span>. Semua hak dilindungi.</p>
                         <p class="text-xs text-slate-500">Dibuat dengan <span class="bg-gradient-to-r from-red-400 to-pink-400 bg-clip-text text-transparent inline-block font-semibold">❤️ Passion</span> untuk keluarga Indonesia</p>
@@ -265,3 +266,4 @@
         </div>
     </body>
 </html>
+<?php /**PATH C:\Users\userl\Desktop\Tubes_EBisnis\resources\views/layouts/dashboard.blade.php ENDPATH**/ ?>

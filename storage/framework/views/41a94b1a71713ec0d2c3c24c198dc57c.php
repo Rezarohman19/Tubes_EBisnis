@@ -1,8 +1,6 @@
-@extends('layouts.dashboard')
-
-@section('content')
+<?php $__env->startSection('content'); ?>
 <div class="bg-[#0B0F1A]">
-    {{-- ── HERO SECTION ───────────────────────────────────── --}}
+    
     <section class="relative overflow-hidden">
         <div class="absolute inset-0 bg-gradient-to-br from-[#050916] via-[#071023] to-[#0b1121]" />
         <div class="absolute inset-0 pointer-events-none opacity-70">
@@ -13,7 +11,7 @@
 
         <div class="relative mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8 lg:py-24">
             <div class="grid gap-12 xl:grid-cols-[1.05fr_0.95fr] xl:items-center">
-                {{-- Left column --}}
+                
                 <div class="space-y-8 text-white">
                     <div class="hero-title inline-flex flex-wrap items-center gap-3 rounded-full border border-white/10 bg-white/5 px-4 py-2 text-sm font-semibold text-slate-200 backdrop-blur-xl shadow-sm shadow-slate-900/30">
                         <span class="rounded-full bg-gradient-to-r from-blue-500 via-indigo-500 to-violet-500 px-3 py-1 text-xs font-bold uppercase tracking-[0.24em] text-white">Premium Frozen Food</span>
@@ -33,7 +31,7 @@
                     </div>
 
                     <div class="hero-buttons flex flex-col gap-4 sm:flex-row sm:flex-wrap sm:items-center">
-                        <a href="{{ route('products.index') }}" class="inline-flex items-center justify-center gap-3 rounded-3xl bg-gradient-to-r from-blue-500 via-indigo-500 to-violet-500 px-8 py-4 text-base font-semibold text-white shadow-[0_24px_60px_-30px_rgba(59,130,246,0.8)] transition duration-300 hover:-translate-y-0.5 hover:scale-[1.01] hover:shadow-blue-500/30 focus:outline-none focus:ring-2 focus:ring-blue-400/40">
+                        <a href="<?php echo e(route('products.index')); ?>" class="inline-flex items-center justify-center gap-3 rounded-3xl bg-gradient-to-r from-blue-500 via-indigo-500 to-violet-500 px-8 py-4 text-base font-semibold text-white shadow-[0_24px_60px_-30px_rgba(59,130,246,0.8)] transition duration-300 hover:-translate-y-0.5 hover:scale-[1.01] hover:shadow-blue-500/30 focus:outline-none focus:ring-2 focus:ring-blue-400/40">
                             Belanja Sekarang
                             <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
                         </a>
@@ -43,7 +41,7 @@
                         </a>
                     </div>
 
-                    <form action="{{ route('products.index') }}" method="GET" class="hero-search rounded-[32px] border border-white/10 bg-white/5 p-3 shadow-2xl shadow-slate-950/20 backdrop-blur-xl transition duration-500 hover:border-blue-400/30 hover:shadow-blue-500/10">
+                    <form action="<?php echo e(route('products.index')); ?>" method="GET" class="hero-search rounded-[32px] border border-white/10 bg-white/5 p-3 shadow-2xl shadow-slate-950/20 backdrop-blur-xl transition duration-500 hover:border-blue-400/30 hover:shadow-blue-500/10">
                         <div class="relative flex items-center gap-3 rounded-3xl bg-[#0B1120]/80 px-4 py-4">
                             <span class="text-slate-400">
                                 <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-5.2-5.2m2.1-5.8a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
@@ -72,12 +70,12 @@
                     </div>
                 </div>
 
-                {{-- Right column --}}
+                
                 <div class="relative animate-fade-in-up">
                     <div class="group relative overflow-hidden rounded-[34px] border border-white/10 bg-[#0b152c]/70 p-1 shadow-2xl shadow-indigo-950/30 transition duration-500 hover:-translate-y-1 hover:shadow-indigo-900/30">
                         <div class="absolute inset-0 bg-[radial-gradient(circle_at_top_left,_rgba(59,130,246,0.2),transparent_24%),radial-gradient(circle_at_bottom_right,_rgba(168,85,247,0.16),transparent_22%)]" />
                         <div class="relative overflow-hidden rounded-[32px] bg-[#0B0F1A]">
-                            <img src="{{ asset('images/frozen-food.jpeg') }}" alt="Frozen food premium" class="h-[420px] w-full object-cover transition duration-700 ease-out group-hover:scale-105" />
+                            <img src="<?php echo e(asset('images/frozen-food.jpeg')); ?>" alt="Frozen food premium" class="h-[420px] w-full object-cover transition duration-700 ease-out group-hover:scale-105" />
                             <div class="absolute inset-0 bg-gradient-to-t from-[#0B0F1A]/85 via-[#0B0F1A]/15 to-transparent" />
 
                             <div class="absolute left-5 top-5 inline-flex items-center gap-2 rounded-full border border-white/10 bg-slate-950/40 px-4 py-2 text-sm text-slate-100 shadow-lg shadow-slate-950/30 backdrop-blur-md">
@@ -102,7 +100,7 @@
     </section>
 
 
-    {{-- ── PROMO BANNER SECTION ──────────────────────── --}}
+    
     <section class="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
         <div class="relative overflow-hidden rounded-[28px] border border-white/10 bg-gradient-to-r from-blue-600/20 via-indigo-600/20 to-violet-600/20 p-8 sm:p-12 shadow-2xl shadow-indigo-950/30 backdrop-blur-md">
             <div class="absolute -left-20 -top-20 h-64 w-64 rounded-full bg-blue-500/20 blur-3xl"></div>
@@ -121,7 +119,7 @@
                         </h2>
                         <p class="text-lg text-slate-300">Dapatkan penawaran terbaik untuk produk frozen food pilihan. Gratis ongkir untuk pembelian pertama Anda!</p>
                         <div class="flex flex-col gap-3 sm:flex-row sm:items-center">
-                            <a href="{{ route('products.index') }}" class="inline-flex items-center justify-center gap-2 rounded-2xl bg-gradient-to-r from-blue-500 to-indigo-500 px-8 py-3.5 text-base font-semibold text-white shadow-lg shadow-blue-500/30 transition-all hover:scale-105 hover:shadow-blue-500/40">
+                            <a href="<?php echo e(route('products.index')); ?>" class="inline-flex items-center justify-center gap-2 rounded-2xl bg-gradient-to-r from-blue-500 to-indigo-500 px-8 py-3.5 text-base font-semibold text-white shadow-lg shadow-blue-500/30 transition-all hover:scale-105 hover:shadow-blue-500/40">
                                 Belanja Sekarang
                                 <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"/></svg>
                             </a>
@@ -131,7 +129,7 @@
                     
                     <div class="hidden lg:flex justify-center items-center">
                         <div class="relative overflow-hidden rounded-2xl border border-white/20 bg-white/5 backdrop-blur-md shadow-xl shadow-blue-500/20 group">
-                            <img src="{{ asset('images/frozen-food.jpeg') }}" alt="Promo diskon 10%" class="h-64 w-64 object-cover transition duration-500 group-hover:scale-110" />
+                            <img src="<?php echo e(asset('images/frozen-food.jpeg')); ?>" alt="Promo diskon 10%" class="h-64 w-64 object-cover transition duration-500 group-hover:scale-110" />
                             <div class="absolute inset-0 bg-gradient-to-t from-[#0B0F1A]/60 via-transparent to-transparent"></div>
                         </div>
                     </div>
@@ -140,7 +138,7 @@
         </div>
     </section>
 
-    {{-- ── FEATURES SECTION ───────────────────────────── --}}
+    
     <section id="features" class="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
         <div class="mb-12 space-y-4 text-center">
             <div class="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-2 mx-auto">
@@ -152,7 +150,7 @@
         </div>
 
         <div class="grid gap-6 lg:grid-cols-4">
-            {{-- Feature 1 --}}
+            
             <div class="group relative overflow-hidden rounded-2xl border border-white/10 bg-gradient-to-br from-white/5 to-transparent p-8 shadow-lg shadow-blue-950/10 transition-all duration-300 hover:-translate-y-1 hover:border-blue-400/40 hover:shadow-blue-500/20">
                 <div class="absolute -right-12 -top-12 h-32 w-32 rounded-full bg-blue-500/10 blur-2xl transition group-hover:bg-blue-500/15"></div>
                 <div class="relative">
@@ -164,7 +162,7 @@
                 </div>
             </div>
 
-            {{-- Feature 2 --}}
+            
             <div class="group relative overflow-hidden rounded-2xl border border-white/10 bg-gradient-to-br from-white/5 to-transparent p-8 shadow-lg shadow-indigo-950/10 transition-all duration-300 hover:-translate-y-1 hover:border-indigo-400/40 hover:shadow-indigo-500/20">
                 <div class="absolute -right-12 -top-12 h-32 w-32 rounded-full bg-indigo-500/10 blur-2xl transition group-hover:bg-indigo-500/15"></div>
                 <div class="relative">
@@ -176,7 +174,7 @@
                 </div>
             </div>
 
-            {{-- Feature 3 --}}
+            
             <div class="group relative overflow-hidden rounded-2xl border border-white/10 bg-gradient-to-br from-white/5 to-transparent p-8 shadow-lg shadow-violet-950/10 transition-all duration-300 hover:-translate-y-1 hover:border-violet-400/40 hover:shadow-violet-500/20">
                 <div class="absolute -right-12 -top-12 h-32 w-32 rounded-full bg-violet-500/10 blur-2xl transition group-hover:bg-violet-500/15"></div>
                 <div class="relative">
@@ -188,7 +186,7 @@
                 </div>
             </div>
 
-            {{-- Feature 4 --}}
+            
             <div class="group relative overflow-hidden rounded-2xl border border-white/10 bg-gradient-to-br from-white/5 to-transparent p-8 shadow-lg shadow-cyan-950/10 transition-all duration-300 hover:-translate-y-1 hover:border-cyan-400/40 hover:shadow-cyan-500/20">
                 <div class="absolute -right-12 -top-12 h-32 w-32 rounded-full bg-cyan-500/10 blur-2xl transition group-hover:bg-cyan-500/15"></div>
                 <div class="relative">
@@ -202,7 +200,7 @@
         </div>
     </section>
 
-    {{-- ── FEATURED PRODUCTS ──────────────────────────── --}}
+    
     <section id="products" class="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
         <div class="mb-12 flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
             <div>
@@ -210,7 +208,7 @@
                 <h2 class="mt-3 text-4xl font-bold text-white">Pilihan Favorit Pelanggan</h2>
                 <p class="mt-3 text-slate-400">Produk-produk terpopuler dengan rating tertinggi dan stok terjamin.</p>
             </div>
-            <a href="{{ route('products.index') }}" class="inline-flex items-center gap-2 rounded-lg bg-[#2563EB] px-6 py-3 font-semibold text-white transition hover:bg-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/40">
+            <a href="<?php echo e(route('products.index')); ?>" class="inline-flex items-center gap-2 rounded-lg bg-[#2563EB] px-6 py-3 font-semibold text-white transition hover:bg-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/40">
                 Lihat Semua Produk
                 <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
             </a>
@@ -218,14 +216,14 @@
 
                 <div class="rounded-3xl border border-slate-700 bg-gradient-to-br from-slate-900/40 via-slate-800/20 to-slate-900/40 p-6 sm:p-8 overflow-hidden">
             <div class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
-                @php
+                <?php
                     $featured = $products?->take(8) ?? collect();
                     $featuredCount = $featured->count();
-                @endphp
+                ?>
 
-                @if($featuredCount > 0)
-                    @foreach($featured as $product)
-                        @php
+                <?php if($featuredCount > 0): ?>
+                    <?php $__currentLoopData = $featured; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $product): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                        <?php
                             $badge = $product->is_best_seller ?? null;
                             $badgeLabel = null;
                             $badgeClass = 'bg-slate-700 text-slate-200';
@@ -245,70 +243,71 @@
                             }
 
                             $imgUrl = $product->image_url ?? ($product->image ? asset('storage/' . $product->image) : null);
-                        @endphp
+                        ?>
 
                         <div class="group overflow-hidden rounded-2xl border border-slate-700 bg-slate-800 transition hover:-translate-y-1 hover:border-blue-500/50 hover:shadow-xl hover:shadow-blue-500/10">
                             <div class="relative overflow-hidden bg-slate-900">
-                                @if($imgUrl)
-                                    <img src="{{ $imgUrl }}" alt="{{ $product->name }}" class="h-56 w-full object-cover transition duration-700 group-hover:scale-110" />
-                                @else
+                                <?php if($imgUrl): ?>
+                                    <img src="<?php echo e($imgUrl); ?>" alt="<?php echo e($product->name); ?>" class="h-56 w-full object-cover transition duration-700 group-hover:scale-110" />
+                                <?php else: ?>
                                     <div class="flex h-56 items-center justify-center bg-slate-700">
                                         <svg class="h-12 w-12 text-slate-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
                                     </div>
-                                @endif
+                                <?php endif; ?>
 
                                 <button class="absolute right-3 top-3 flex h-10 w-10 items-center justify-center rounded-lg bg-slate-900/70 text-slate-300 backdrop-blur transition hover:bg-blue-500 hover:text-white focus:outline-none focus:ring-2 focus:ring-blue-500/40" aria-label="Wishlist">
                                     <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 016.364 0L12 7.636l1.318-1.318a4.5 4.5 0 116.364 6.364L12 21.682l-7.682-7.682a4.5 4.5 0 010-6.364z"/></svg>
                                 </button>
 
-                                @if($badgeLabel)
-                                    <div class="absolute left-3 top-3 rounded-lg px-3 py-1 text-xs font-bold {{ $badgeClass }} ring-1 ring-white/5">
-                                        {{ $badgeLabel }}
+                                <?php if($badgeLabel): ?>
+                                    <div class="absolute left-3 top-3 rounded-lg px-3 py-1 text-xs font-bold <?php echo e($badgeClass); ?> ring-1 ring-white/5">
+                                        <?php echo e($badgeLabel); ?>
+
                                     </div>
-                                @endif
+                                <?php endif; ?>
                             </div>
 
                             <div class="p-5">
-                                <p class="text-xs font-semibold uppercase tracking-widest text-slate-500">{{ Str::limit($product->category ?? 'Frozen', 12) }}</p>
-                                <h3 class="mt-2 text-lg font-bold text-white line-clamp-2">{{ $product->name }}</h3>
-                                <p class="mt-2 text-sm text-slate-400 line-clamp-2">{{ Str::limit($product->description, 50) }}</p>
+                                <p class="text-xs font-semibold uppercase tracking-widest text-slate-500"><?php echo e(Str::limit($product->category ?? 'Frozen', 12)); ?></p>
+                                <h3 class="mt-2 text-lg font-bold text-white line-clamp-2"><?php echo e($product->name); ?></h3>
+                                <p class="mt-2 text-sm text-slate-400 line-clamp-2"><?php echo e(Str::limit($product->description, 50)); ?></p>
 
                                 <div class="mt-4 flex items-center justify-between gap-3">
                                     <div>
-                                        <p class="text-lg font-bold text-blue-300">Rp {{ number_format($product->price, 0, ',', '.') }}</p>
+                                        <p class="text-lg font-bold text-blue-300">Rp <?php echo e(number_format($product->price, 0, ',', '.')); ?></p>
                                         <div class="mt-1 flex items-center gap-1">
-                                            @for($i = 0; $i < 5; $i++)
+                                            <?php for($i = 0; $i < 5; $i++): ?>
                                                 <svg class="h-3.5 w-3.5 fill-amber-400" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118L2.616 10.1c-.783-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z"/></svg>
-                                            @endfor
-                                            <span class="text-xs text-slate-400 ml-1">{{ $product->rating ?? '4.8' }}</span>
+                                            <?php endfor; ?>
+                                            <span class="text-xs text-slate-400 ml-1"><?php echo e($product->rating ?? '4.8'); ?></span>
                                         </div>
                                     </div>
-                                    <span class="rounded-lg bg-slate-700 px-2 py-1 text-xs font-semibold text-slate-300">Stok {{ $product->stock }}</span>
+                                    <span class="rounded-lg bg-slate-700 px-2 py-1 text-xs font-semibold text-slate-300">Stok <?php echo e($product->stock); ?></span>
                                 </div>
 
                                 <div class="mt-4 grid gap-2">
-                                    @auth
-                                        <form action="{{ route('cart.add') }}" method="POST">
-                                            @csrf
-                                            <input type="hidden" name="product_id" value="{{ $product->id }}">
+                                    <?php if(auth()->guard()->check()): ?>
+                                        <form action="<?php echo e(route('cart.add')); ?>" method="POST">
+                                            <?php echo csrf_field(); ?>
+                                            <input type="hidden" name="product_id" value="<?php echo e($product->id); ?>">
                                             <div class="flex gap-2">
                                                 <button type="submit" class="w-full rounded-lg bg-[#2563EB] py-2.5 font-semibold text-white transition hover:bg-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/40">Tambah</button>
-                                                <a href="{{ route('products.show', $product->id) }}" class="w-full rounded-lg bg-slate-700 py-2.5 text-center font-semibold text-slate-200 transition hover:bg-slate-600">Detail</a>
+                                                <a href="<?php echo e(route('products.show', $product->id)); ?>" class="w-full rounded-lg bg-slate-700 py-2.5 text-center font-semibold text-slate-200 transition hover:bg-slate-600">Detail</a>
                                             </div>
                                         </form>
-                                    @else
+                                    <?php else: ?>
                                         <div class="flex gap-2">
-                                            <a href="{{ route('login') }}" class="w-full rounded-lg bg-[#2563EB] py-2.5 text-center font-semibold text-white transition hover:bg-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/40">Keranjang</a>
-                                            <a href="{{ route('products.show', $product->id) }}" class="w-full rounded-lg bg-slate-700 py-2.5 text-center font-semibold text-slate-200 transition hover:bg-slate-600">Lihat Detail</a>
+                                            <a href="<?php echo e(route('login')); ?>" class="w-full rounded-lg bg-[#2563EB] py-2.5 text-center font-semibold text-white transition hover:bg-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/40">Keranjang</a>
+                                            <a href="<?php echo e(route('products.show', $product->id)); ?>" class="w-full rounded-lg bg-slate-700 py-2.5 text-center font-semibold text-slate-200 transition hover:bg-slate-600">Lihat Detail</a>
                                         </div>
-                                    @endauth
+                                    <?php endif; ?>
                                 </div>
                             </div>
                         </div>
-                    @endforeach
-                @else
-                    {{-- Skeleton: tampilkan 8 card agar section tidak kosong --}}
-                    @for($s=0;$s<8;$s++)
+                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                <?php else: ?>
+                    
+                    <?php for($s=0;$s<8;$s++): ?>
                         <div class="group overflow-hidden rounded-2xl border border-slate-700 bg-slate-800">
                             <div class="relative bg-slate-900">
                                 <div class="h-56 w-full animate-pulse bg-slate-700/60"></div>
@@ -322,9 +321,9 @@
                                     <div>
                                         <div class="h-5 w-28 animate-pulse rounded bg-slate-700/60"></div>
                                         <div class="mt-2 flex gap-1">
-                                            @for($i=0;$i<5;$i++)
+                                            <?php for($i=0;$i<5;$i++): ?>
                                                 <div class="h-3 w-3 animate-pulse rounded-full bg-amber-400/30"></div>
-                                            @endfor
+                                            <?php endfor; ?>
                                         </div>
                                     </div>
                                     <div class="h-6 w-18 animate-pulse rounded bg-slate-700/60"></div>
@@ -335,12 +334,12 @@
                                 </div>
                             </div>
                         </div>
-                    @endfor
-                @endif
+                    <?php endfor; ?>
+                <?php endif; ?>
             </div>
         </div>
 
-        {{-- Product Grid (Visual Catalog) --}}
+        
         <div class="mt-14 space-y-4">
             <div class="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
                 <div>
@@ -348,96 +347,97 @@
                     <p class="mt-2 text-sm text-slate-400">Pilih produk favorit Anda dengan cepat dari katalog visual.</p>
                 </div>
 
-                <a href="{{ route('products.index') }}" class="inline-flex items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-blue-600/80 to-indigo-600/80 px-4 py-2 font-semibold text-white shadow-lg shadow-blue-500/15 ring-1 ring-white/10 transition hover:shadow-xl hover:shadow-blue-500/25 focus:outline-none focus:ring-2 focus:ring-blue-400/30">
+                <a href="<?php echo e(route('products.index')); ?>" class="inline-flex items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-blue-600/80 to-indigo-600/80 px-4 py-2 font-semibold text-white shadow-lg shadow-blue-500/15 ring-1 ring-white/10 transition hover:shadow-xl hover:shadow-blue-500/25 focus:outline-none focus:ring-2 focus:ring-blue-400/30">
                     Lihat Katalog
                     <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
                 </a>
             </div>
 
-            @php
+            <?php
                 $catalog = $products?->take(20) ?? collect();
                 $catalogCount = $catalog->count();
                 $catalogTarget = 10; // agar carousel tetap terasa penuh
-            @endphp
+            ?>
 
-            @if($catalogCount > 0)
+            <?php if($catalogCount > 0): ?>
                 <div class="relative">
-                    {{-- Swiper Wrapper --}}
+                    
                     <div
                         class="swiper"
                         data-visual-catalog-swiper
                     >
                         <div class="swiper-wrapper">
-                            @foreach($catalog as $product)
-                                @php
+                            <?php $__currentLoopData = $catalog; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $product): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                <?php
                                     $imgUrl = $product->image_url ?? ($product->image ? asset('storage/' . $product->image) : null);
                                     $discount = $product->discount_percentage ?? null;
                                     $isBest = $product->is_best_seller ?? false;
                                     $isTerlaris = $product->is_terlaris ?? false;
                                     $label = $discount && $discount > 0 ? ('-' . (int)$discount . '%') : ($isBest ? 'Best Seller' : ($isTerlaris ? 'Terlaris' : null));
-                                @endphp
+                                ?>
 
                                 <div class="swiper-slide">
                                     <div class="group h-full overflow-hidden rounded-2xl border border-white/10 bg-white/5 backdrop-blur-md shadow-[0_0_0_1px_rgba(255,255,255,0.04)] transition duration-300 hover:-translate-y-1 hover:border-blue-400/40 hover:shadow-[0_0_18px_rgba(37,99,235,0.18)]">
                                         <div class="relative">
                                             <div class="h-[170px] w-full bg-slate-900">
-                                                @if($imgUrl)
-                                                    <img src="{{ $imgUrl }}" alt="{{ $product->name }}" class="h-full w-full object-cover transition duration-700 group-hover:scale-105" />
-                                                @else
+                                                <?php if($imgUrl): ?>
+                                                    <img src="<?php echo e($imgUrl); ?>" alt="<?php echo e($product->name); ?>" class="h-full w-full object-cover transition duration-700 group-hover:scale-105" />
+                                                <?php else: ?>
                                                     <div class="flex h-full w-full items-center justify-center bg-slate-800">
                                                         <svg class="h-10 w-10 text-slate-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
                                                     </div>
-                                                @endif
+                                                <?php endif; ?>
                                             </div>
 
-                                            @if($label)
-                                                <div class="absolute left-3 top-3 rounded-xl px-2.5 py-1 text-[11px] font-bold text-white {{ $discount && $discount > 0 ? 'bg-[#2563EB]' : ($isBest ? 'bg-emerald-500/90' : 'bg-amber-500/90') }} shadow-lg shadow-black/20">
-                                                    {{ $label }}
+                                            <?php if($label): ?>
+                                                <div class="absolute left-3 top-3 rounded-xl px-2.5 py-1 text-[11px] font-bold text-white <?php echo e($discount && $discount > 0 ? 'bg-[#2563EB]' : ($isBest ? 'bg-emerald-500/90' : 'bg-amber-500/90')); ?> shadow-lg shadow-black/20">
+                                                    <?php echo e($label); ?>
+
                                                 </div>
-                                            @endif
+                                            <?php endif; ?>
                                         </div>
 
                                         <div class="p-4">
-                                            <p class="text-sm font-bold text-white line-clamp-2">{{ $product->name }}</p>
+                                            <p class="text-sm font-bold text-white line-clamp-2"><?php echo e($product->name); ?></p>
 
                                             <div class="mt-2 flex items-center justify-between gap-2">
-                                                <p class="text-sm font-bold text-blue-300">Rp {{ number_format($product->price, 0, ',', '.') }}</p>
+                                                <p class="text-sm font-bold text-blue-300">Rp <?php echo e(number_format($product->price, 0, ',', '.')); ?></p>
                                             </div>
 
                                             <div class="mt-2 flex items-center gap-1 text-amber-400">
-                                                @for($i=0;$i<5;$i++)
+                                                <?php for($i=0;$i<5;$i++): ?>
                                                     <svg class="h-3.5 w-3.5 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118L2.616 10.1c-.783-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z"/></svg>
-                                                @endfor
-                                                <span class="text-xs text-slate-400 ml-1">{{ $product->rating ?? '4.8' }}</span>
+                                                <?php endfor; ?>
+                                                <span class="text-xs text-slate-400 ml-1"><?php echo e($product->rating ?? '4.8'); ?></span>
                                             </div>
 
                                             <div class="mt-3 grid gap-2">
-                                                @auth
-                                                    <form action="{{ route('cart.add') }}" method="POST">
-                                                        @csrf
-                                                        <input type="hidden" name="product_id" value="{{ $product->id }}">
+                                                <?php if(auth()->guard()->check()): ?>
+                                                    <form action="<?php echo e(route('cart.add')); ?>" method="POST">
+                                                        <?php echo csrf_field(); ?>
+                                                        <input type="hidden" name="product_id" value="<?php echo e($product->id); ?>">
                                                         <button type="submit" class="w-full rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 py-2 text-xs font-bold text-white transition hover:from-blue-500 hover:to-indigo-500 focus:outline-none focus:ring-2 focus:ring-blue-500/30">
                                                             Tambah
                                                         </button>
                                                     </form>
-                                                @else
-                                                    <a href="{{ route('login') }}" class="block w-full rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 py-2 text-center text-xs font-bold text-white transition hover:from-blue-500 hover:to-indigo-500 focus:outline-none focus:ring-2 focus:ring-blue-500/30">
+                                                <?php else: ?>
+                                                    <a href="<?php echo e(route('login')); ?>" class="block w-full rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 py-2 text-center text-xs font-bold text-white transition hover:from-blue-500 hover:to-indigo-500 focus:outline-none focus:ring-2 focus:ring-blue-500/30">
                                                         Login untuk Keranjang
                                                     </a>
-                                                @endauth
+                                                <?php endif; ?>
 
-                                                <a href="{{ route('products.show', $product->id) }}" class="block w-full rounded-xl bg-white/5 py-2 text-center text-xs font-bold text-slate-200 ring-1 ring-white/10 transition hover:bg-white/10">
+                                                <a href="<?php echo e(route('products.show', $product->id)); ?>" class="block w-full rounded-xl bg-white/5 py-2 text-center text-xs font-bold text-slate-200 ring-1 ring-white/10 transition hover:bg-white/10">
                                                     Lihat Detail
                                                 </a>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                            @endforeach
+                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
 
-                            {{-- Skeleton tambahan agar terasa penuh --}}
-                            @if($catalogCount < $catalogTarget)
-                                @for($k=0;$k<($catalogTarget-$catalogCount);$k++)
+                            
+                            <?php if($catalogCount < $catalogTarget): ?>
+                                <?php for($k=0;$k<($catalogTarget-$catalogCount);$k++): ?>
                                     <div class="swiper-slide">
                                         <div class="h-full overflow-hidden rounded-2xl border border-white/10 bg-white/5 backdrop-blur-md">
                                             <div class="h-[170px] bg-slate-900">
@@ -447,9 +447,9 @@
                                                 <div class="h-5 w-4/5 animate-pulse rounded bg-slate-700/60"></div>
                                                 <div class="mt-2 h-4 w-2/3 animate-pulse rounded bg-slate-700/60"></div>
                                                 <div class="mt-3 flex gap-1">
-                                                    @for($i=0;$i<5;$i++)
+                                                    <?php for($i=0;$i<5;$i++): ?>
                                                         <div class="h-3.5 w-3.5 animate-pulse rounded-full bg-amber-400/30"></div>
-                                                    @endfor
+                                                    <?php endfor; ?>
                                                 </div>
                                                 <div class="mt-3 grid gap-2">
                                                     <div class="h-9 w-full animate-pulse rounded-xl bg-[#2563EB]/30"></div>
@@ -458,11 +458,11 @@
                                             </div>
                                         </div>
                                     </div>
-                                @endfor
-                            @endif
+                                <?php endfor; ?>
+                            <?php endif; ?>
                         </div>
 
-                        {{-- Controls --}}
+                        
                         <button
                             type="button"
                             data-swiper-prev
@@ -480,12 +480,12 @@
                         </button>
                     </div>
                 </div>
-            @else
-                {{-- Skeleton untuk katalog jika $products kosong --}}
+            <?php else: ?>
+                
                 <div class="relative">
                     <div class="swiper" data-visual-catalog-swiper>
                         <div class="swiper-wrapper">
-                            @for($s=0;$s<8;$s++)
+                            <?php for($s=0;$s<8;$s++): ?>
                                 <div class="swiper-slide">
                                     <div class="h-full overflow-hidden rounded-2xl border border-white/10 bg-white/5 backdrop-blur-md">
                                         <div class="h-[170px] bg-slate-900">
@@ -495,9 +495,9 @@
                                             <div class="h-5 w-4/5 animate-pulse rounded bg-slate-700/60"></div>
                                             <div class="mt-2 h-4 w-2/3 animate-pulse rounded bg-slate-700/60"></div>
                                             <div class="mt-3 flex gap-1">
-                                                @for($i=0;$i<5;$i++)
+                                                <?php for($i=0;$i<5;$i++): ?>
                                                     <div class="h-3.5 w-3.5 animate-pulse rounded-full bg-amber-400/30"></div>
-                                                @endfor
+                                                <?php endfor; ?>
                                             </div>
                                             <div class="mt-3 grid gap-2">
                                                 <div class="h-9 w-full animate-pulse rounded-xl bg-[#2563EB]/30"></div>
@@ -506,16 +506,16 @@
                                         </div>
                                     </div>
                                 </div>
-                            @endfor
+                            <?php endfor; ?>
                         </div>
                     </div>
                 </div>
-            @endif
+            <?php endif; ?>
         </div>
     </section>
 
 
-    {{-- ── TESTIMONIALS SLIDER ──────────────────────── --}}
+    
     <section class="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
         <div class="grid gap-12 lg:grid-cols-2 lg:items-center">
             <div class="space-y-6">
@@ -526,14 +526,14 @@
                 <p class="text-lg text-slate-300">Ribuan pelanggan telah merasakan kualitas dan layanan terbaik dari Frozymart. Inilah kata-kata mereka.</p>
 
                 <div x-data="{ current: 0, testimonials: 3 }" class="space-y-6">
-                    {{-- Testimonial Slider --}}
+                    
                     <div class="space-y-5">
-                        {{-- Item 1 --}}
+                        
                         <div x-show="current === 0" x-transition class="rounded-2xl border border-slate-700 bg-slate-800 p-8">
                             <div class="flex gap-1 text-blue-300 mb-4">
-                                @for($i = 0; $i < 5; $i++)
+                                <?php for($i = 0; $i < 5; $i++): ?>
                                     <svg class="h-5 w-5 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118L2.616 10.1c-.783-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z"/></path></svg>
-                                @endfor
+                                <?php endfor; ?>
                             </div>
                             <p class="text-slate-300 leading-relaxed">"Paket nugget dan sosis tiba dalam kondisi beku sempurna. Rasanya enak dan praktis untuk masak cepat. Rekomendasi banget untuk semua orang!"</p>
                             <div class="mt-5 flex items-center gap-3">
@@ -545,29 +545,29 @@
                             </div>
                         </div>
 
-                        {{-- Item 2 --}}
+                        
                         <div x-show="current === 1" x-transition class="rounded-2xl border border-slate-700 bg-slate-800 p-8">
                             <div class="flex gap-1 text-blue-300 mb-4">
-                                @for($i = 0; $i < 5; $i++)
+                                <?php for($i = 0; $i < 5; $i++): ?>
                                     <svg class="h-5 w-5 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118L2.616 10.1c-.783-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z"/></path></svg>
-                                @endfor
+                                <?php endfor; ?>
                             </div>
                             <p class="text-slate-300 leading-relaxed">"Harganya sangat kompetitif dan promo selalu update. Produk bisa disimpan lama di freezer tanpa mengurangi cita rasa. Terus bertahan ya Frozymart!"</p>
                             <div class="mt-5 flex items-center gap-3">
                                 <div class="h-12 w-12 rounded-full bg-gradient-to-br from-blue-400 to-cyan-500 flex items-center justify-center text-white font-bold">R</div>
                                 <div>
                                     <p class="font-semibold text-white">Rina Susanto</p>
-                                    <p class="text-sm text-slate-400">Kemiling</p>
+                                    <p class="text-sm text-slate-400">Bandung</p>
                                 </div>
                             </div>
                         </div>
 
-                        {{-- Item 3 --}}
+                        
                         <div x-show="current === 2" x-transition class="rounded-2xl border border-slate-700 bg-slate-800 p-8">
                             <div class="flex gap-1 text-blue-300 mb-4">
-                                @for($i = 0; $i < 5; $i++)
+                                <?php for($i = 0; $i < 5; $i++): ?>
                                     <svg class="h-5 w-5 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118L2.616 10.1c-.783-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z"/></path></svg>
-                                @endfor
+                                <?php endfor; ?>
                             </div>
                             <p class="text-slate-300 leading-relaxed">"Customer service-nya responsif dan membantu. Pengiriman selalu on time dan packaging sangat aman. Ini toko frozen food terbaik yang pernah saya gunakan!"</p>
                             <div class="mt-5 flex items-center gap-3">
@@ -580,7 +580,7 @@
                         </div>
                     </div>
 
-                    {{-- Slider Controls --}}
+                    
                     <div class="flex items-center gap-3">
                         <button @click="current = current === 0 ? testimonials - 1 : current - 1" class="p-2 rounded-lg bg-slate-800 text-slate-400 transition hover:bg-blue-500 hover:text-white focus:outline-none focus:ring-2 focus:ring-blue-500/40" aria-label="Previous testimonial">
                             <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
@@ -597,7 +597,7 @@
                 </div>
             </div>
 
-            {{-- Stats Card --}}
+            
             <div class="space-y-6">
                 <div class="rounded-2xl border border-slate-700 bg-gradient-to-br from-slate-800 to-slate-900 p-8">
                     <div class="grid gap-6">
@@ -631,7 +631,7 @@
         </div>
     </section>
 
-    {{-- ── CONTACT & FOOTER CTA ──────────────────────── --}}
+    
     <section class="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
         <div class="grid gap-10 lg:grid-cols-2 lg:items-start">
             <div class="space-y-6">
@@ -650,7 +650,7 @@
                 </div>
 
                 <div class="grid gap-4 sm:grid-cols-2">
-                    {{-- WhatsApp CTA Card --}}
+                    
                     <a
                         href="https://wa.me/62857-6851-0161"
                         target="_blank"
@@ -673,7 +673,7 @@
                         </div>
                     </a>
 
-                    {{-- Email CTA Card --}}
+                    
                     <a
                         href="mailto:frozymart@gmail.com"
                         class="group relative overflow-hidden rounded-2xl border border-white/10 bg-white/5 p-5 backdrop-blur-md shadow-sm transition hover:-translate-y-0.5 hover:border-blue-400/40 hover:shadow-[0_0_18px_rgba(37,99,235,0.18)]"
@@ -695,7 +695,7 @@
                     </a>
                 </div>
 
-                {{-- Jam Operasional (consistent card) --}}
+                
                 <div class="rounded-2xl border border-white/10 bg-white/5 p-5 backdrop-blur-md shadow-sm">
                     <div class="flex items-start gap-4">
                         <div class="flex h-12 w-12 items-center justify-center rounded-2xl bg-gradient-to-br from-blue-600/20 to-indigo-600/20 ring-1 ring-white/10">
@@ -711,7 +711,7 @@
                     </div>
                 </div>
 
-                {{-- Social --}}
+                
                 <div class="space-y-3">
                     <p class="text-sm font-semibold text-slate-300">Ikuti Media Sosial Kami</p>
                     <div class="flex flex-wrap gap-3">
@@ -725,7 +725,7 @@
                 </div>
             </div>
 
-            {{-- Map (proporsional, presisi) --}}
+            
             <div class="h-[360px] sm:h-[420px] lg:h-[520px] overflow-hidden rounded-[22px] border border-white/10 bg-white/5 backdrop-blur-md shadow-sm">
                 <iframe
                     class="h-full w-full"
@@ -738,6 +738,8 @@
         </div>
     </section>
 </div>
-@endsection
+<?php $__env->stopSection(); ?>
 
 
+
+<?php echo $__env->make('layouts.dashboard', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?><?php /**PATH C:\Users\userl\Desktop\Tubes_EBisnis\resources\views/dashboard.blade.php ENDPATH**/ ?>
