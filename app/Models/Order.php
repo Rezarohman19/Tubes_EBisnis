@@ -16,10 +16,12 @@ class Order extends Model
         'snap_redirect_url', 'midtrans_status', 'paid_at',
         'courier', 'tracking_number', 'shipping_cost',
         'discount', 'coupon_code', 'cancel_reason',
+        'payment_proof', 'payment_proof_uploaded_at', 'payment_rejection_reason',
     ];
 
     protected $casts = [
         'paid_at' => 'datetime',
+        'payment_proof_uploaded_at' => 'datetime',
     ];
 
     public function user()
@@ -35,55 +37,72 @@ class Order extends Model
     public function getPaymentMethodLabelAttribute(): string
     {
         return match ($this->payment_method) {
-            'bank_transfer' => 'Transfer Bank (Virtual Account)',
-            'dana'          => 'DANA',
-            'qris'          => 'QRIS',
-            'gopay'         => 'GoPay',
-            'ovo'           => 'OVO',
-            'shopee_pay'    => 'ShopeePay',
-            'midtrans'      => 'Midtrans',
-            default         => ucfirst(str_replace('_', ' ', $this->payment_method)),
+            'bca'        => 'Transfer Bank BCA',
+            'mandiri'    => 'Transfer Bank Mandiri',
+            'bni'        => 'Transfer Bank BNI',
+            'bri'        => 'Transfer Bank BRI',
+            'dana'       => 'DANA',
+            'gopay'      => 'GoPay',
+            'ovo'        => 'OVO',
+            'shopee_pay' => 'ShopeePay',
+            'qris'       => 'QRIS',
+            'cod'        => 'Bayar di Tempat (COD)',
+            default      => ucfirst(str_replace('_', ' ', $this->payment_method)),
         };
     }
 
     public function getPaymentStatusLabelAttribute(): string
     {
         return match ($this->payment_status) {
-            'paid'    => 'Lunas',
-            'pending' => 'Menunggu Pembayaran',
-            'expired' => 'Kedaluwarsa',
-            'failed'  => 'Gagal',
-            'cancel'  => 'Dibatalkan',
-            default   => 'Menunggu Pembayaran',
+            'paid'           => 'Lunas',
+            'pending'        => 'Menunggu Pembayaran',
+            'proof_uploaded' => 'Bukti Dikirim',
+            'rejected'       => 'Ditolak',
+            'expired'        => 'Kedaluwarsa',
+            'failed'         => 'Gagal',
+            default          => 'Menunggu Pembayaran',
+        };
+    }
+
+    public function getPaymentStatusColorAttribute(): string
+    {
+        return match ($this->payment_status) {
+            'paid'           => 'green',
+            'proof_uploaded' => 'blue',
+            'rejected'       => 'red',
+            'pending'        => 'yellow',
+            default          => 'gray',
         };
     }
 
     public function getStatusColorAttribute(): string
     {
-        return match ($this->status) {
-            'Menunggu Pembayaran' => 'yellow',
-            'Diproses'            => 'blue',
-            'Dikirim'             => 'indigo',
-            'Selesai'             => 'green',
-            'Dibatalkan'          => 'red',
-            default               => 'gray',
-        };
+        $map = [
+            'Menunggu Pembayaran'     => 'yellow',
+            'Pembayaran Dikonfirmasi' => 'blue',
+            'Diproses'                => 'indigo',
+            'Dikirim'                 => 'purple',
+            'Selesai'                 => 'green',
+            'Dibatalkan'              => 'red',
+        ];
+
+        return $map[$this->status] ?? 'gray';
     }
 
-    /**
-     * PERBAIKAN #5: grand_total tidak boleh double-kurangi diskon.
-     *
-     * Alur pembuatan order di ProductController@placeOrder:
-     *   $grandTotal = subtotal - discount  → disimpan ke kolom `total`
-     *
-     * Jadi `total` sudah berisi harga bersih setelah diskon.
-     * grand_total = total + shipping_cost (saja)
-     *
-     * Versi lama: return $this->total + $this->shipping_cost - $this->discount;
-     * Ini salah karena diskon sudah dikurangkan dari total saat order dibuat.
-     */
     public function getGrandTotalAttribute(): int
     {
         return $this->total + ($this->shipping_cost ?? 0);
+    }
+
+    public function isCod(): bool
+    {
+        return $this->payment_method === 'cod';
+    }
+
+    public function canUploadProof(): bool
+    {
+        return ! $this->isCod()
+            && in_array($this->payment_status, ['pending', 'rejected'])
+            && $this->status !== 'Dibatalkan';
     }
 }

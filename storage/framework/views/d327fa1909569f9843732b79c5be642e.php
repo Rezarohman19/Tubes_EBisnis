@@ -1,35 +1,44 @@
-<x-app-layout>
+<?php if (isset($component)) { $__componentOriginal9ac128a9029c0e4701924bd2d73d7f54 = $component; } ?>
+<?php if (isset($attributes)) { $__attributesOriginal9ac128a9029c0e4701924bd2d73d7f54 = $attributes; } ?>
+<?php $component = App\View\Components\AppLayout::resolve([] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
+<?php $component->withName('app-layout'); ?>
+<?php if ($component->shouldRender()): ?>
+<?php $__env->startComponent($component->resolveView(), $component->data()); ?>
+<?php if (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag): ?>
+<?php $attributes = $attributes->except(\App\View\Components\AppLayout::ignoredParameterNames()); ?>
+<?php endif; ?>
+<?php $component->withAttributes([]); ?>
     <div class="py-8 animate-fade-in-up">
         <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
 
-            {{-- Flash --}}
-            @if(session('success'))
+            
+            <?php if(session('success')): ?>
                 <div class="mb-6 flex items-center gap-3 rounded-2xl border border-emerald-500/20 bg-emerald-500/10 p-4 animate-slide-down">
                     <svg class="h-5 w-5 flex-none text-emerald-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
-                    <p class="text-sm font-semibold text-emerald-400">{{ session('success') }}</p>
+                    <p class="text-sm font-semibold text-emerald-400"><?php echo e(session('success')); ?></p>
                 </div>
-            @endif
+            <?php endif; ?>
 
-            {{-- Header & Search Bar --}}
+            
             <div class="mb-8">
                 <div class="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
                     <div>
                         <h2 class="section-heading">📦 Katalog Produk</h2>
                         <p class="section-subheading">Jelajahi koleksi lengkap frozen food berkualitas kami</p>
                     </div>
-                    {{-- Hasil pencarian info --}}
-                    @if(request('search'))
+                    
+                    <?php if(request('search')): ?>
                         <p class="text-sm text-slate-400">
-                            Hasil pencarian "<span class="font-bold text-white">{{ request('search') }}</span>":
-                            <span class="font-bold text-blue-400">{{ $products->total() }} produk</span>
+                            Hasil pencarian "<span class="font-bold text-white"><?php echo e(request('search')); ?></span>":
+                            <span class="font-bold text-blue-400"><?php echo e($products->total()); ?> produk</span>
                         </p>
-                    @endif
+                    <?php endif; ?>
                 </div>
 
-                {{-- Filter & Search Bar --}}
-                <form method="GET" action="{{ route('products.index') }}" class="mt-5 rounded-2xl border border-white/5 bg-[#161B29] p-4">
+                
+                <form method="GET" action="<?php echo e(route('products.index')); ?>" class="mt-5 rounded-2xl border border-white/5 bg-[#161B29] p-4">
                     <div class="flex flex-col gap-3 sm:flex-row sm:items-center">
-                        {{-- Search --}}
+                        
                         <div class="relative flex-1">
                             <span class="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-slate-500">
                                 <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
@@ -37,25 +46,25 @@
                             <input
                                 type="text"
                                 name="search"
-                                value="{{ request('search') }}"
+                                value="<?php echo e(request('search')); ?>"
                                 placeholder="Cari produk (nugget, sosis, bakso...)"
                                 class="w-full rounded-xl border border-white/10 bg-[#0B0F1A] py-2.5 pl-12 pr-4 text-sm text-white placeholder-slate-500 transition focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 focus:outline-none"
                             >
                         </div>
 
-                        {{-- Sort --}}
+                        
                         <select name="sort" class="rounded-xl border border-white/10 bg-[#0B0F1A] py-2.5 px-4 text-sm text-white focus:border-blue-500 focus:outline-none">
                             <option value="">Urutkan</option>
-                            <option value="newest"     {{ request('sort') === 'newest'     ? 'selected' : '' }}>Terbaru</option>
-                            <option value="price_asc"  {{ request('sort') === 'price_asc'  ? 'selected' : '' }}>Harga: Rendah → Tinggi</option>
-                            <option value="price_desc" {{ request('sort') === 'price_desc' ? 'selected' : '' }}>Harga: Tinggi → Rendah</option>
+                            <option value="newest"     <?php echo e(request('sort') === 'newest'     ? 'selected' : ''); ?>>Terbaru</option>
+                            <option value="price_asc"  <?php echo e(request('sort') === 'price_asc'  ? 'selected' : ''); ?>>Harga: Rendah → Tinggi</option>
+                            <option value="price_desc" <?php echo e(request('sort') === 'price_desc' ? 'selected' : ''); ?>>Harga: Tinggi → Rendah</option>
                         </select>
 
-                        {{-- Stock Filter --}}
+                        
                         <select name="stock_filter" class="rounded-xl border border-white/10 bg-[#0B0F1A] py-2.5 px-4 text-sm text-white focus:border-blue-500 focus:outline-none">
                             <option value="">Semua Stok</option>
-                            <option value="available" {{ request('stock_filter') === 'available' ? 'selected' : '' }}>Tersedia</option>
-                            <option value="out"       {{ request('stock_filter') === 'out'       ? 'selected' : '' }}>Habis</option>
+                            <option value="available" <?php echo e(request('stock_filter') === 'available' ? 'selected' : ''); ?>>Tersedia</option>
+                            <option value="out"       <?php echo e(request('stock_filter') === 'out'       ? 'selected' : ''); ?>>Habis</option>
                         </select>
 
                         <button type="submit" class="btn-primary !py-2.5 !px-6 !rounded-xl !text-xs !font-black whitespace-nowrap">
@@ -63,123 +72,133 @@
                             Cari
                         </button>
 
-                        @if(request('search') || request('sort') || request('stock_filter'))
-                            <a href="{{ route('products.index') }}" class="btn-ghost !py-2.5 !px-4 !rounded-xl !text-xs whitespace-nowrap">
+                        <?php if(request('search') || request('sort') || request('stock_filter')): ?>
+                            <a href="<?php echo e(route('products.index')); ?>" class="btn-ghost !py-2.5 !px-4 !rounded-xl !text-xs whitespace-nowrap">
                                 Reset
                             </a>
-                        @endif
+                        <?php endif; ?>
                     </div>
                 </form>
             </div>
 
-            {{-- Products Grid --}}
-            @if($products->isEmpty())
+            
+            <?php if($products->isEmpty()): ?>
                 <div class="flex flex-col items-center justify-center rounded-3xl border-2 border-dashed border-white/5 bg-[#161B29] py-24 text-center">
                     <div class="flex h-24 w-24 items-center justify-center rounded-full bg-[#0B0F1A]">
                         <svg class="h-12 w-12 text-slate-700" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
                     </div>
                     <h3 class="mt-6 text-xl font-bold text-white">
-                        @if(request('search'))
-                            Produk "{{ request('search') }}" tidak ditemukan
-                        @else
+                        <?php if(request('search')): ?>
+                            Produk "<?php echo e(request('search')); ?>" tidak ditemukan
+                        <?php else: ?>
                             Produk Tidak Tersedia
-                        @endif
+                        <?php endif; ?>
                     </h3>
                     <p class="mt-2 text-sm text-slate-500">
-                        @if(request('search'))
+                        <?php if(request('search')): ?>
                             Coba kata kunci lain atau hapus filter pencarian
-                        @else
+                        <?php else: ?>
                             Saat ini belum ada produk. Silakan cek kembali nanti.
-                        @endif
+                        <?php endif; ?>
                     </p>
-                    @if(request('search') || request('sort') || request('stock_filter'))
-                        <a href="{{ route('products.index') }}" class="btn-primary mt-6 !text-xs">Lihat Semua Produk</a>
-                    @endif
+                    <?php if(request('search') || request('sort') || request('stock_filter')): ?>
+                        <a href="<?php echo e(route('products.index')); ?>" class="btn-primary mt-6 !text-xs">Lihat Semua Produk</a>
+                    <?php endif; ?>
                 </div>
-            @else
+            <?php else: ?>
                 <div class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-                    @foreach($products as $product)
+                    <?php $__currentLoopData = $products; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $product): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                         <div class="product-card group">
-                            {{-- Image --}}
+                            
                             <div class="relative aspect-[4/3] overflow-hidden bg-gradient-to-br from-[#0B0F1A] to-[#161B29]">
-                                @if($product->image)
-                                    <img src="{{ $product->image_url }}" alt="{{ $product->name }}" class="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110">
-                                @else
+                                <?php if($product->image): ?>
+                                    <img src="<?php echo e($product->image_url); ?>" alt="<?php echo e($product->name); ?>" class="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110">
+                                <?php else: ?>
                                     <div class="flex h-full flex-col items-center justify-center gap-3">
                                         <div class="flex h-20 w-20 items-center justify-center rounded-3xl bg-[#0B0F1A]">
                                             <svg class="h-10 w-10 text-slate-700" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
                                         </div>
                                         <span class="text-xs font-semibold text-slate-600">No Image</span>
                                     </div>
-                                @endif
+                                <?php endif; ?>
 
-                                {{-- Stock Badge --}}
+                                
                                 <div class="absolute top-3 right-3">
-                                    @if($product->stock > 10)
-                                        <span class="badge-success text-[10px]"><span class="h-1.5 w-1.5 rounded-full bg-emerald-500"></span>Stok: {{ $product->stock }}</span>
-                                    @elseif($product->stock > 0)
-                                        <span class="badge-warning text-[10px]"><span class="h-1.5 w-1.5 animate-pulse rounded-full bg-amber-500"></span>Sisa: {{ $product->stock }}</span>
-                                    @else
+                                    <?php if($product->stock > 10): ?>
+                                        <span class="badge-success text-[10px]"><span class="h-1.5 w-1.5 rounded-full bg-emerald-500"></span>Stok: <?php echo e($product->stock); ?></span>
+                                    <?php elseif($product->stock > 0): ?>
+                                        <span class="badge-warning text-[10px]"><span class="h-1.5 w-1.5 animate-pulse rounded-full bg-amber-500"></span>Sisa: <?php echo e($product->stock); ?></span>
+                                    <?php else: ?>
                                         <span class="badge-danger text-[10px]">Habis</span>
-                                    @endif
+                                    <?php endif; ?>
                                 </div>
 
-                                {{-- Hover Overlay --}}
+                                
                                 <div class="absolute inset-0 flex items-end bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100">
-                                    <a href="{{ route('products.show', $product) }}" class="m-3 flex w-full items-center justify-center gap-2 rounded-2xl bg-white/95 py-2.5 text-sm font-bold text-gray-900 backdrop-blur transition-all hover:bg-white">
+                                    <a href="<?php echo e(route('products.show', $product)); ?>" class="m-3 flex w-full items-center justify-center gap-2 rounded-2xl bg-white/95 py-2.5 text-sm font-bold text-gray-900 backdrop-blur transition-all hover:bg-white">
                                         <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/></svg>
                                         Lihat Detail
                                     </a>
                                 </div>
                             </div>
 
-                            {{-- Info --}}
+                            
                             <div class="p-5">
-                                <h3 class="text-sm font-bold text-white line-clamp-1">{{ $product->name }}</h3>
-                                <p class="mt-1.5 text-xs text-slate-500 line-clamp-2 leading-relaxed">{{ $product->description }}</p>
-                                <p class="mt-3 text-xl font-black text-white">Rp {{ number_format($product->price, 0, ',', '.') }}</p>
+                                <h3 class="text-sm font-bold text-white line-clamp-1"><?php echo e($product->name); ?></h3>
+                                <p class="mt-1.5 text-xs text-slate-500 line-clamp-2 leading-relaxed"><?php echo e($product->description); ?></p>
+                                <p class="mt-3 text-xl font-black text-white">Rp <?php echo e(number_format($product->price, 0, ',', '.')); ?></p>
 
                                 <div class="mt-4">
-                                    @if($product->stock > 0)
-                                        @auth
-                                            <form action="{{ route('cart.add') }}" method="POST">
-                                                @csrf
-                                                <input type="hidden" name="product_id" value="{{ $product->id }}">
+                                    <?php if($product->stock > 0): ?>
+                                        <?php if(auth()->guard()->check()): ?>
+                                            <form action="<?php echo e(route('cart.add')); ?>" method="POST">
+                                                <?php echo csrf_field(); ?>
+                                                <input type="hidden" name="product_id" value="<?php echo e($product->id); ?>">
                                                 <input type="hidden" name="quantity" value="1">
                                                 <button type="submit" class="btn-primary w-full !py-2.5 !rounded-xl !text-xs !shadow-md">
                                                     <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"/></svg>
                                                     Tambah ke Keranjang
                                                 </button>
                                             </form>
-                                        @else
-                                            <a href="{{ route('login') }}" class="btn-primary w-full !py-2.5 !rounded-xl !text-xs !shadow-md">
+                                        <?php else: ?>
+                                            <a href="<?php echo e(route('login')); ?>" class="btn-primary w-full !py-2.5 !rounded-xl !text-xs !shadow-md">
                                                 <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1"/></svg>
                                                 Login untuk Beli
                                             </a>
-                                        @endauth
-                                    @else
+                                        <?php endif; ?>
+                                    <?php else: ?>
                                         <button disabled class="flex w-full items-center justify-center gap-2 rounded-xl bg-white/5 py-2.5 text-xs font-bold text-slate-600 cursor-not-allowed border border-white/5">
                                             Stok Habis
                                         </button>
-                                    @endif
+                                    <?php endif; ?>
                                 </div>
                             </div>
                         </div>
-                    @endforeach
+                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                 </div>
 
-                {{-- Pagination --}}
-                @if($products->hasPages())
+                
+                <?php if($products->hasPages()): ?>
                     <div class="mt-10 flex justify-center">
-                        {{ $products->links() }}
-                    </div>
-                @endif
+                        <?php echo e($products->links()); ?>
 
-                {{-- Info jumlah produk --}}
+                    </div>
+                <?php endif; ?>
+
+                
                 <p class="mt-4 text-center text-xs text-slate-600">
-                    Menampilkan {{ $products->firstItem() }}–{{ $products->lastItem() }} dari {{ $products->total() }} produk
+                    Menampilkan <?php echo e($products->firstItem()); ?>–<?php echo e($products->lastItem()); ?> dari <?php echo e($products->total()); ?> produk
                 </p>
-            @endif
+            <?php endif; ?>
         </div>
     </div>
-</x-app-layout>
+ <?php echo $__env->renderComponent(); ?>
+<?php endif; ?>
+<?php if (isset($__attributesOriginal9ac128a9029c0e4701924bd2d73d7f54)): ?>
+<?php $attributes = $__attributesOriginal9ac128a9029c0e4701924bd2d73d7f54; ?>
+<?php unset($__attributesOriginal9ac128a9029c0e4701924bd2d73d7f54); ?>
+<?php endif; ?>
+<?php if (isset($__componentOriginal9ac128a9029c0e4701924bd2d73d7f54)): ?>
+<?php $component = $__componentOriginal9ac128a9029c0e4701924bd2d73d7f54; ?>
+<?php unset($__componentOriginal9ac128a9029c0e4701924bd2d73d7f54); ?>
+<?php endif; ?><?php /**PATH C:\Users\nurai\Tubes_EBisnis\resources\views/products/index.blade.php ENDPATH**/ ?>

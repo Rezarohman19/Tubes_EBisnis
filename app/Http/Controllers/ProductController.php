@@ -9,41 +9,23 @@ use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 
 class ProductController extends Controller
 {
     // ─── DASHBOARD (landing page) ──────────────────────────────────────────────
     public function index(Request $request)
     {
-        $query = Product::orderBy('created_at', 'desc');
-
-        if ($request->filled('search')) {
-            $query->where('name', 'like', '%' . $request->search . '%');
-        }
-
-        if ($request->filled('stock_filter')) {
-            match ($request->stock_filter) {
-                'available' => $query->where('stock', '>', 0),
-                'out'       => $query->where('stock', 0),
-                default     => null,
-            };
-        }
-
-        if ($request->filled('sort')) {
-            match ($request->sort) {
-                'price_asc'  => $query->orderBy('price', 'asc'),
-                'price_desc' => $query->orderBy('price', 'desc'),
-                'newest'     => $query->orderBy('created_at', 'desc'),
-                default      => null,
-            };
-        }
-
-        $products = $query->get();
+        // Beranda: tampilkan produk featured (tanpa filter/search — itu di katalog)
+        $products = Product::where('stock', '>', 0)
+            ->orderByDesc('created_at')
+            ->take(8)
+            ->get();
 
         return view('dashboard', compact('products'));
     }
 
-    // ─── PRODUCTS INDEX (public, with filter) ────────────────────────────────
+    // ─── PRODUCTS INDEX (katalog, dengan search & filter) ─────────────────────
     public function productsIndex(Request $request)
     {
         $query = Product::orderBy('created_at', 'desc');
@@ -69,7 +51,7 @@ class ProductController extends Controller
             };
         }
 
-        $products = $query->get();
+        $products = $query->paginate(12)->withQueryString();
 
         return view('products.index', compact('products'));
     }
@@ -119,7 +101,6 @@ class ProductController extends Controller
 
     public function addToCart(Request $request)
     {
-        // Wajib login untuk tambah ke keranjang
         if (!Auth::check()) {
             return redirect()->route('login')->with('info', 'Silakan login terlebih dahulu untuk menambahkan produk ke keranjang.');
         }
@@ -175,26 +156,17 @@ class ProductController extends Controller
         $cartData = $this->buildCartItems();
 
         if (count($cartData['items']) === 0) {
-            return redirect()->route('dashboard')->with('error', 'Keranjang kosong. Silakan pilih produk terlebih dahulu.');
+            return redirect()->route('home')->with('error', 'Keranjang kosong.');
         }
 
-        // Ambil kupon dari session jika ada
         $couponCode  = session('coupon_code');
         $discount    = session('coupon_discount', 0);
-        $couponError = null;
 
         $netTotal    = max(0, $cartData['subtotal'] - $discount);
         $shippingFee = $netTotal >= 150000 ? 0 : 15000;
         $grandTotal  = $netTotal + $shippingFee;
 
-        $paymentMethods = [
-            'dana'          => 'DANA',
-            'qris'          => 'QRIS',
-            'gopay'         => 'GoPay',
-            'ovo'           => 'OVO',
-            'shopee_pay'    => 'ShopeePay',
-            'bank_transfer' => 'Transfer Bank (Virtual Account)',
-        ];
+        $paymentMethods = config('payment.methods');
 
         return view('checkout', [
             'items'          => $cartData['items'],
@@ -203,7 +175,6 @@ class ProductController extends Controller
             'shipping_cost'  => $shippingFee,
             'grandTotal'     => $grandTotal,
             'couponCode'     => $couponCode,
-            'couponError'    => $couponError,
             'paymentMethods' => $paymentMethods,
         ]);
     }
@@ -238,17 +209,16 @@ class ProductController extends Controller
     public function placeOrder(Request $request)
     {
         $request->validate([
-            'shipping_address' => 'required|string|max:255',
-            'payment_method'   => 'required|in:dana,qris,gopay,ovo,shopee_pay,bank_transfer',
+            'shipping_address' => 'required|string|max:500',
+            'payment_method'   => 'required|in:' . implode(',', array_keys(config('payment.methods'))),
         ]);
 
         $cartData = $this->buildCartItems();
 
         if (count($cartData['items']) === 0) {
-            return redirect()->route('dashboard')->with('error', 'Keranjang kosong.');
+            return redirect()->route('home')->with('error', 'Keranjang kosong.');
         }
 
-        // Hitung diskon & ongkir
         $discount    = session('coupon_discount', 0);
         $couponCode  = session('coupon_code');
         $netTotal    = max(0, $cartData['subtotal'] - $discount);
@@ -256,12 +226,14 @@ class ProductController extends Controller
         $grandTotal  = $netTotal + $shippingFee;
 
         $order = DB::transaction(function () use ($request, $cartData, $discount, $couponCode, $shippingFee, $grandTotal) {
+            $isCod = $request->payment_method === 'cod';
+
             $order = Order::create([
                 'user_id'          => Auth::id(),
                 'total'            => $grandTotal,
                 'shipping_address' => $request->shipping_address,
                 'payment_method'   => $request->payment_method,
-                'payment_status'   => 'pending',
+                'payment_status'   => $isCod ? 'pending' : 'pending',
                 'status'           => 'Menunggu Pembayaran',
                 'discount'         => $discount,
                 'shipping_cost'    => $shippingFee,
@@ -283,7 +255,6 @@ class ProductController extends Controller
                 $item['product']->decrement('stock', $item['quantity']);
             }
 
-            // Tambah used_count kupon
             if ($couponCode) {
                 Coupon::where('code', $couponCode)->increment('used_count');
             }
@@ -293,20 +264,30 @@ class ProductController extends Controller
 
         session()->forget(['cart', 'coupon_code', 'coupon_discount']);
 
-        return redirect()->route('payment.index', $order)->with('success', 'Pesanan berhasil dibuat. Silakan lanjutkan pembayaran.');
+        // COD langsung ke detail pesanan
+        if ($order->isCod()) {
+            return redirect()->route('orders.show', $order)
+                ->with('success', 'Pesanan berhasil dibuat! Pembayaran dilakukan saat barang tiba.');
+        }
+
+        return redirect()->route('payment.index', $order)
+            ->with('success', 'Pesanan berhasil dibuat! Silakan lakukan pembayaran.');
     }
 
     // ─── ORDERS ──────────────────────────────────────────────────────────────
-    public function orders()
+    public function orders(Request $request)
     {
         /** @var \App\Models\User|null $user */
         $user = Auth::user();
         if (!$user) abort(403);
 
-        $orders = $user->orders()
-            ->with('items.product')
-            ->orderByDesc('created_at')
-            ->get();
+        $query = $user->orders()->with('items.product')->latest();
+
+        if ($request->filled('status')) {
+            $query->where('status', $request->status);
+        }
+
+        $orders = $query->paginate(10)->withQueryString();
 
         return view('orders.index', compact('orders'));
     }
@@ -316,23 +297,6 @@ class ProductController extends Controller
         if ($order->user_id !== Auth::id()) abort(403);
         $order->load('items.product');
         return view('orders.show', compact('order'));
-    }
-
-    public function confirmPayment(Request $request, Order $order)
-    {
-        if ($order->user_id !== Auth::id()) abort(403);
-
-        if ($order->payment_status === 'paid') {
-            return redirect()->back()->with('info', 'Pembayaran sudah dikonfirmasi.');
-        }
-
-        $order->update([
-            'payment_status' => 'paid',
-            'status'         => 'Diproses',
-            'paid_at'        => now(),
-        ]);
-
-        return redirect()->route('orders.show', $order)->with('success', 'Pembayaran berhasil dikonfirmasi. Pesanan sedang diproses.');
     }
 
     public function completeOrder(Order $order)
@@ -345,7 +309,8 @@ class ProductController extends Controller
 
         $order->update(['status' => 'Selesai']);
 
-        return redirect()->route('orders.show', $order)->with('success', 'Pesanan berhasil diselesaikan. Terima kasih sudah berbelanja!');
+        return redirect()->route('orders.show', $order)
+            ->with('success', 'Pesanan berhasil diselesaikan. Terima kasih sudah berbelanja!');
     }
 
     // ─── PAYMENT ─────────────────────────────────────────────────────────────
@@ -357,47 +322,55 @@ class ProductController extends Controller
             return redirect()->route('orders.show', $order)->with('info', 'Pesanan ini sudah lunas.');
         }
 
+        if ($order->isCod()) {
+            return redirect()->route('orders.show', $order)->with('info', 'Pesanan ini menggunakan COD.');
+        }
+
         $order->load('items.product');
+        $methodConfig = config('payment.methods.' . $order->payment_method);
 
-        $paymentMethods = [
-            'dana'          => 'DANA',
-            'qris'          => 'QRIS',
-            'gopay'         => 'GoPay',
-            'ovo'           => 'OVO',
-            'shopee_pay'    => 'ShopeePay',
-            'bank_transfer' => 'Transfer Bank (Virtual Account)',
-        ];
-
-        return view('payment.index', compact('order', 'paymentMethods'));
+        return view('payment.index', compact('order', 'methodConfig'));
     }
 
-    public function processPayment(Request $request, Order $order)
+    public function uploadProof(Request $request, Order $order)
     {
         if ($order->user_id !== Auth::id()) abort(403);
 
-        $request->validate([
-            'payment_method' => 'required|in:dana,qris,gopay,ovo,shopee_pay,bank_transfer',
-        ]);
-
-        if ($order->payment_status === 'paid') {
-            return redirect()->route('orders.show', $order)->with('info', 'Pesanan ini sudah lunas.');
+        if (!$order->canUploadProof()) {
+            return redirect()->back()->with('error', 'Tidak dapat mengunggah bukti pembayaran untuk pesanan ini.');
         }
 
-        $order->update([
-            'payment_method' => $request->payment_method,
-            'payment_status' => 'paid',
-            'status'         => 'Diproses',
-            'paid_at'        => now(),
+        $request->validate([
+            'payment_proof' => 'required|image|mimes:jpeg,png,jpg,webp|max:4096',
         ]);
 
-        return redirect()->route('orders.show', $order)->with('success', 'Pembayaran berhasil! Pesanan Anda sedang diproses.');
+        // Hapus bukti lama jika ada
+        if ($order->payment_proof) {
+            Storage::disk('public')->delete('payment_proofs/' . $order->payment_proof);
+        }
+
+        $file     = $request->file('payment_proof');
+        $filename = time() . '_' . $order->id . '.' . $file->extension();
+        $file->storeAs('payment_proofs', $filename, 'public');
+
+        $order->update([
+            'payment_proof'              => $filename,
+            'payment_proof_uploaded_at'  => now(),
+            'payment_status'             => 'proof_uploaded',
+        ]);
+
+        // Notifikasi admin (opsional — bisa diaktifkan jika ada admin notification)
+        // Notification::send(User::admins()->get(), new PaymentProofUploaded($order));
+
+        return redirect()->route('orders.show', $order)
+            ->with('success', 'Bukti pembayaran berhasil dikirim! Admin akan memverifikasi dalam 1×24 jam.');
     }
 
-    public function paymentHistory()
+    public function paymentHistory(Request $request)
     {
         $orders = Order::where('user_id', Auth::id())
             ->orderByDesc('created_at')
-            ->get();
+            ->paginate(10);
 
         return view('payment.history.index', compact('orders'));
     }
