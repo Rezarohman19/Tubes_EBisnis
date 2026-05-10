@@ -3,6 +3,7 @@
 use App\Http\Controllers\Admin;
 use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\MidtransController;
 use Illuminate\Support\Facades\Route;
 
 // ─── PUBLIC ROUTES ────────────────────────────────────────────────────────────
@@ -10,6 +11,9 @@ Route::get('/', [ProductController::class, 'index'])->name('home');
 Route::get('/dashboard', [ProductController::class, 'index'])->name('dashboard');
 Route::get('/products', [ProductController::class, 'productsIndex'])->name('products.index');
 Route::get('/products/{product}', [ProductController::class, 'show'])->name('products.show');
+
+// ─── Midtrans Webhook (no auth) ───────────────────────────────────────────────
+Route::post('/midtrans/webhook', [MidtransController::class, 'webhook'])->name('midtrans.webhook');
 
 // ─── USER ROUTES (Auth) ───────────────────────────────────────────────────────
 Route::middleware('auth')->group(function () {
@@ -35,6 +39,10 @@ Route::middleware('auth')->group(function () {
     Route::get('/payment/{order}',        [ProductController::class, 'payment'])->name('payment.index');
     Route::post('/payment/{order}/proof', [ProductController::class, 'uploadProof'])->name('payment.proof');
     Route::get('/payments',               [ProductController::class, 'paymentHistory'])->name('payment.history');
+
+    // Midtrans (authenticated)
+    Route::get('/payment/{order}/midtrans', [MidtransController::class, 'createSnap'])->name('payment.midtrans');
+    Route::get('/payment/{order}/finish',   [MidtransController::class, 'finish'])->name('payment.finish');
 
     // Notifikasi
     Route::get('/notifications',                     [NotificationController::class, 'index'])->name('notifications.index');

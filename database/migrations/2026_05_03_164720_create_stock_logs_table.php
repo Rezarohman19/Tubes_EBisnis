@@ -11,17 +11,18 @@ return new class extends Migration
      */
     public function up(): void
     {
-    Schema::create('stock_logs', function (Blueprint $table) {
-        $table->id();
-        $table->foreignId('product_id')->constrained()->onDelete('cascade');
-        $table->foreignId('user_id')->constrained();
-        $table->integer('quantity_before');
-        $table->integer('quantity_change');
-        $table->integer('quantity_after');
-        $table->string('type'); // restock, sale, adjustment
-        $table->text('note')->nullable();
-        $table->timestamps();
-    });
+        Schema::create('stock_logs', function (Blueprint $table) {
+            $table->id();
+            $table->foreignId('product_id')->constrained()->onDelete('cascade');
+            // user_id nullable karena bisa jadi system-generated (order cancel, dll)
+            $table->foreignId('user_id')->nullable()->constrained()->nullOnDelete();
+            $table->integer('quantity_before');
+            $table->integer('quantity_change');
+            $table->integer('quantity_after');
+            $table->string('type'); // restock, sale, adjustment, cancel
+            $table->text('note')->nullable();
+            $table->timestamps();
+        });
     }
 
     /**

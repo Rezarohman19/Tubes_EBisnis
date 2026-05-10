@@ -89,9 +89,14 @@ class Order extends Model
         return $map[$this->status] ?? 'gray';
     }
 
+    /**
+     * Grand total = total yang sudah disimpan di DB (sudah termasuk shipping & discount).
+     * Alias ini dipakai oleh Midtrans.
+     */
     public function getGrandTotalAttribute(): int
     {
-        return $this->total + ($this->shipping_cost ?? 0);
+        // 'total' di DB sudah merupakan grand total final (lihat placeOrder di ProductController)
+        return (int) $this->total;
     }
 
     public function isCod(): bool
