@@ -4,6 +4,7 @@ use App\Http\Controllers\Admin;
 use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\MidtransController;
+use App\Http\Controllers\ReviewController;
 use Illuminate\Support\Facades\Route;
 
 // ─── PUBLIC ROUTES ────────────────────────────────────────────────────────────
@@ -31,9 +32,13 @@ Route::middleware('auth')->group(function () {
     Route::post('/checkout/coupon/remove',[ProductController::class, 'removeCoupon'])->name('checkout.coupon.remove');
 
     // Pesanan
-    Route::get('/orders',                 [ProductController::class, 'orders'])->name('orders.index');
-    Route::get('/orders/{order}',         [ProductController::class, 'orderShow'])->name('orders.show');
-    Route::post('/orders/{order}/complete',[ProductController::class, 'completeOrder'])->name('orders.complete');
+    Route::get('/orders',                          [ProductController::class, 'orders'])->name('orders.index');
+    Route::get('/orders/{order}',                  [ProductController::class, 'orderShow'])->name('orders.show');
+    Route::post('/orders/{order}/complete',        [ProductController::class, 'completeOrder'])->name('orders.complete');
+
+    // Ulasan
+    Route::get('/orders/{order}/review',           [ReviewController::class, 'create'])->name('reviews.create');
+    Route::post('/orders/{order}/review',          [ReviewController::class, 'store'])->name('reviews.store');
 
     // Pembayaran Manual
     Route::get('/payment/{order}',        [ProductController::class, 'payment'])->name('payment.index');
@@ -45,9 +50,9 @@ Route::middleware('auth')->group(function () {
     Route::get('/payment/{order}/finish',   [MidtransController::class, 'finish'])->name('payment.finish');
 
     // Notifikasi
-    Route::get('/notifications',                     [NotificationController::class, 'index'])->name('notifications.index');
-    Route::post('/notifications/{id}/read',          [NotificationController::class, 'markRead'])->name('notifications.read');
-    Route::post('/notifications/read-all',           [NotificationController::class, 'markAllRead'])->name('notifications.read-all');
+    Route::get('/notifications',                 [NotificationController::class, 'index'])->name('notifications.index');
+    Route::post('/notifications/{id}/read',      [NotificationController::class, 'markRead'])->name('notifications.read');
+    Route::post('/notifications/read-all',       [NotificationController::class, 'markAllRead'])->name('notifications.read-all');
 });
 
 // ─── ADMIN ROUTES ─────────────────────────────────────────────────────────────
@@ -72,15 +77,15 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
     Route::get('/orders/{order}/proof',            [Admin\OrderController::class, 'viewProof'])->name('orders.view-proof');
 
     // Pengguna
-    Route::get('/users',                [Admin\UserController::class, 'index'])->name('users.index');
-    Route::get('/users/{user}',         [Admin\UserController::class, 'show'])->name('users.show');
-    Route::post('/users/{user}/toggle-role',[Admin\UserController::class, 'toggleRole'])->name('users.toggle-role');
+    Route::get('/users',                     [Admin\UserController::class, 'index'])->name('users.index');
+    Route::get('/users/{user}',              [Admin\UserController::class, 'show'])->name('users.show');
+    Route::post('/users/{user}/toggle-role', [Admin\UserController::class, 'toggleRole'])->name('users.toggle-role');
 
     // Kupon
-    Route::get('/coupons',              [Admin\CouponController::class, 'index'])->name('coupons.index');
-    Route::post('/coupons',             [Admin\CouponController::class, 'store'])->name('coupons.store');
-    Route::post('/coupons/{coupon}/toggle',[Admin\CouponController::class, 'toggle'])->name('coupons.toggle');
-    Route::delete('/coupons/{coupon}',  [Admin\CouponController::class, 'destroy'])->name('coupons.destroy');
+    Route::get('/coupons',                   [Admin\CouponController::class, 'index'])->name('coupons.index');
+    Route::post('/coupons',                  [Admin\CouponController::class, 'store'])->name('coupons.store');
+    Route::post('/coupons/{coupon}/toggle',  [Admin\CouponController::class, 'toggle'])->name('coupons.toggle');
+    Route::delete('/coupons/{coupon}',       [Admin\CouponController::class, 'destroy'])->name('coupons.destroy');
 });
 
 require __DIR__ . '/auth.php';
